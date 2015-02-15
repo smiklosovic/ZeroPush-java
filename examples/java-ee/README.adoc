@@ -1,0 +1,26 @@
+== ZeroPush Java EE example
+
+This project shows how you can use ZeroPush in Java EE environment.
+
+The project consists of two CDI beans and http://arquillian.org/[Arquillian test].
+
+The first bean, +ZeroPushPropertiesLoader+, loads properties from +zeropush.properties+ file. This property file is put into ShrinkWrap archive from test resources and actual values of this property file are filtered upon test execution and filtered values are taken from system variables passed to Maven build from the command line, hence the only place you specify credentials is on the command line.
+
+The second bean, +ZeroPushCredentialsVerifier+, injects +ZeroPushPropertiesLoader+ and sets loaded keys to +ZeroPush+ client and its only business method, +verifyToken+, verifies if a token is valid or not.
+
+Test case does the following:
+
+* It constructs WAR file intended to be deployed to Java EE container. We are using microdeployment constructed by ShrinkWrap so we are using only really needed resources, being sure our test case is isolated from the outside world and our class path is not polluted.
+* Such constructed archive is deployed to embedded Weld EE container. Weld is the reference implementation of CDI for Java EE containers.
+* We execute tests which communicate with live ZeroPush API servers and we query the API to verify our credentials.
+
+== How to run tests?
+
+Tests are executed via Maven like this:
+
+[source, bash]
+----
+$ mvn clean test -Dzeropush.token.server="token" -Dzeropush.token.app="token"
+----
+
+Grap these valid tokens from your web console.

@@ -1,0 +1,243 @@
+== ZeroPush Java client
+
+This repository is the home of the ZeroPush client in Java.
+
+In order to use Java client in your Java EE / SE application, you have to use this dependency in your Maven project:
+
+[source,xml]
+----
+<dependency>
+    <groupId>com.zeropush</groupId>
+    <artifactId>zeropush</artifactId>
+    <version><!-- prefered version --></version>
+</dependency>
+----
+
+In order to use Java client in Android, you have to use this dependency 
+in your Maven projects:
+
+[source,xml]
+----
+<dependency>
+    <groupId>com.zeropush</groupId>
+    <artifactId>zeropush-android</artifactId>
+    <version><!-- prefered version --></version>
+</dependency>
+----
+
+== Usage
+
+The only entry point to the client is via class +com.zeropush.ZeroPush+.
+
+ZeroPush Java client is very intuitive and easy to use. The client is able to communicate with every ZeroPush API server endpoint. You can also send push notifications from the client to registered devices hence you can use this library from your Java backends.
+
+The usage of the client is exactly the same for Java EE / SE and Android.
+
+While using ZeroPush client, every endpoint call will result in a Java oneliner since we are using fluent API heavily.
+
+=== Configuration of ZeroPush client
+
++ZeroPush+ uses default configuration when not set it via its +setConfiguration+ method.
+
+Before any interaction with ZeroPush server, you have to specify server and application tokens like this:
+
+[source,java]
+----
+ZeroPush.getConfiguration().setServerToken("serve token");
+ZeroPush.getConfiguration().setApplicationToken("application token");
+----
+
+Some endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via +getAuthToken()+ method on +ZeroPushConfiguration+. You can decide which token will be returned by this method by calling +preferServerToken()+ or +preferAppToken()+ method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.
+
+=== Thread safety
+
+ZeroPush client is designed to be thread safe. You can use +ZeroPush+ client in two separate threads. +ZeroPushConfiguration+ is persisted in +ThreadLocal+ so invocations of +ZeroPush+ on different threads will use different configurations.
+
+=== Sending of notifications
+
+The sending of a  push notification is in general divided into two steps. Firstly, you have to build your notification to be sent. The second step is to actually send it. Additionally, you can decide whether you want to broadcast the built notification or whether you want to broadcast it only to some channel.
+
+There are builders for every notification type (Android, iOS/Macs, Safari). For the brevity, only Android notification will be shown here. All other notification types are used similarly.
+
+The notification builders copy all options described in the https://zeropush.com/documentation/api_reference#notify[official documentation]. Notification builders have setters for every possible option for particular notification type. There are +IOSPushNotification+ and +SafariPushNotification+ classes for notifications meant to be sent to iOS/Macs and Safari respectively.
+
+Building and sending of an Android notification:
+
+[source,java]
+----
+ZeroPushNotification notification = new AndroidPushNotification.Builder()
+    .addDeviceToken(DEVICE_TOKEN)
+    .addDatum("alert", "Now Boarding")
+    .addDatum("username", "fred.droid")
+    .build();
+
+// A built notification is actually sent like this:
+
+ZeroPush.notification(notification).send();
+
+// In order to broadcast it, you have to set broadcasting flag:
+
+ZeroPush.notification(notification).broadcast().send();
+
+// You may want to broadcast it only for some channel like this:
+
+ZeroPush.notification(notification).broadcast("channel_name").send();
+----
+
+You can check your quotas as well when you execute +getQuota()+ method after +send()+.
+
+=== Communication with endpoints
+
+Verification of credentials:
+
+[source,java]
+----
+ZeroPush.verification().credentials("your key").execute();
+----
+
+Registration of a device:
+
+[source,java]
+----
+// registering
+
+ZeroPush.registration().register("device token").execute();
+
+// unregistering
+
+ZeroPush.registration().unregister("device token").execute();
+----
+
+Subscription of a device:
+
+[source,java]
+----
+// subscription
+
+ZeroPush.subscription().subscribe("token", "channel").execute();
+
+// unsubscription
+
+ZeroPush.subscription().unsubscribe("token", "channel").execute();
+----
+
+Getting of inactive devices:
+
+[source,java]
+----
+ZeroPush.inactivity().get().execute();
+----
+
+Setting of a badge:
+
+[source,java]
+----
+ZeroPush.badge().setBadge("device token", <integer>).execute();
+----
+
+Getting of a single device:
+
+[source,java]
+----
+Device dev = ZeroPush.devices().get("device token").execute().getDevice();
+----
+
+Getting of devices:
+
+[source,java]
+----
+List<Device> devices = ZeroPush.devices().get().execute().getDevices();
+----
+
+Replacing of channels for some device token:
+
+[source,java]
+----
+ZeroPush.devices().replaceChannels("token", array of channels).execute();
+----
+
+Appending channels to some device token:
+
+[source,java]
+----
+ZeroPush.devices().appendChannels("token", array of channels).execute();
+----
+
+Getting of single channel:
+
+[source,java]
+----
+Channel ch = ZeroPush.channels().get("channel").execute().getChannel();
+----
+
+Getting of all channels:
+
+[source,java]
+----
+List<Channel> channels = ZeroPush.channels().get().execute().getChannels();
+----
+
+Unsubscribe all devices and delete this channel:
+
+[source,java]
+----
+ZeroPush.channels().delete("channel_name").execute();
+----
+
+=== Inspection of a response from ZeroPush server
+
+When you execute +.execute()+ method on ZeroPush oneliner, you get object which represents the actual response from ZeroPush server. You can get error messages via +getResponseError()+.
+
+=== Reaching ZeroPush service behind a proxy
+
+In case you are behind a proxy server and you want to reach ZeroPush API server, you have to create +Proxy+ object and set it to +ZeroPushConfiguration+ like the following:
+
+[source,java]
+----
+Proxy proxy = new ZeroPushConfiguration.ProxyBuilder()
+    .withHostname("127.0.0.1") // by default "localhost"
+    .withPort(8888) // by default "8080"
+    .build();
+----
+
+After building +Proxy+, pass it into the configuration:
+
+[source,java]
+----
+ZeroPush.getConfiguration().setProxy(proxy);
+----
+
+From now on, all communication with ZeroPush API service will be executed via proxy.
+
+=== Using client in Android environment
+
+When you use client in Android, you have to provide your own asynchronicity mechanism. If you use it in UI thread, there can be +NetworkOnMainThreadException+ thrown. You can use e.g. +AsyncTask+ class to wrap ZeroPush client into it.
+
+=== How to execute internal tests?
+
+Implementation artifact contains integration tests. You can execute these tests in two ways.
+
+The first option:
+
+[source,bash]
+----
+$ mvn clean test
+----
+
+Tests use server token and app token from your ZeroPush web console. You have to specify them in order to be able to execute tests. These tests will operate against the application with the specified keys.
+
+Keys are saved in property file located in +src/test/resources/zeropush.properties+. The content of the file has to be like this:
+
+----
+zeropush.token.server=<your server token>
+zeropush.token.app=<your app token>
+----
+
+The second option is to specify tokens on a command line so these credentials will not be saved in property file (hence not committed).
+
+[source,bash]
+----
+$ mvn clean test -Dzeropush.token.server=<token> -Dzeropush.token.app=<token>
+----
+
+In case you execute tests by the second option and there are tokens specified in property file as well, system properties will override these in property file. 
