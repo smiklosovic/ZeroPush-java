@@ -47,6 +47,8 @@ public class VerifyCredentials extends Endpoint<VerifyCredentialsResponse>
 {
     private String authToken;
 
+    private boolean authTokenSet = false;
+    
     public VerifyCredentials()
     {
     }
@@ -54,17 +56,13 @@ public class VerifyCredentials extends Endpoint<VerifyCredentialsResponse>
     public VerifyCredentials(String authToken)
     {
         this.authToken = authToken;
+        this.authTokenSet = true;
     }
 
     @Override
     public VerifyCredentialsResponse execute() throws ZeroPushEndpointException
     {
         String authToken = resolveAuthToken();
-
-        if (authToken == null)
-        {
-            throw new ZeroPushEndpointException("Unable to determine the authentication token to verify.");
-        }
 
         HttpUriRequest request = new ZeroPushRequestBuilder(RequestType.GET, ZeroPush.getConfiguration())
             .withAuthToken(authToken)
@@ -98,15 +96,23 @@ public class VerifyCredentials extends Endpoint<VerifyCredentialsResponse>
         String defaultAuthToken = this.authToken;
         String authToken = ZeroPush.getConfiguration().getAuthToken();
 
-        if (defaultAuthToken != null && defaultAuthToken.length() != 0)
+        if (authTokenSet)
         {
-            return defaultAuthToken;
+            if (defaultAuthToken != null && defaultAuthToken.length() != 0)
+            {
+                return defaultAuthToken;
+            }
+            else
+            {
+                throw new ZeroPushEndpointException("Authentication token to verify specified via credentials(String) was "
+                    + "null object or an empty String.");
+            }
         }
         else if (authToken != null && authToken.length() != 0)
         {
             return authToken;
         }
 
-        return null;
+        throw new ZeroPushEndpointException("Unable to determine the authentication token to verify.");
     }
 }

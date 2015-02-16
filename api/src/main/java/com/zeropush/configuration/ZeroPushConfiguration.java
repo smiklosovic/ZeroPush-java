@@ -196,6 +196,24 @@ public final class ZeroPushConfiguration
     }
 
     /**
+     *
+     * @param serverToken server token to set
+     * @param applicationToken application token to set
+     * @return this configuration
+     * @throws ZeroPushConfigurationException when either {@code serverToken} or {@code applicationToken} is a null object or an empty String.
+     */
+    public ZeroPushConfiguration setTokens(String serverToken, String applicationToken)
+    {
+        Validate.notNullOrEmpty(serverToken, "Server token is a null object or an empty String.");
+        Validate.notNullOrEmpty(applicationToken, "Application token is a null object or an empty String.");
+
+        this.serverToken = serverToken;
+        this.applicationToken = applicationToken;
+
+        return this;
+    }
+
+    /**
      * When set, all requests to ZeroPush server will go through this proxy server.
      *
      * @param proxy a proxy server to send all requests through

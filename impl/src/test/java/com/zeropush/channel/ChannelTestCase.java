@@ -59,9 +59,4 @@ public class ChannelTestCase extends AbstractZeroPushTestCase
         Assert.assertEquals(1, channelsResponse.getChannels().size());
     }
 
-    @Test
-    public void createAndDeleteChannel()
-    {
-
-    }
 }

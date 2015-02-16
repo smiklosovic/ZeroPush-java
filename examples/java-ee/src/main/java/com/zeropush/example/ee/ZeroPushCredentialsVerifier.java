@@ -24,32 +24,31 @@
  */
 package com.zeropush.example.ee;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import org.apache.http.HttpStatus;
 
 import com.zeropush.ZeroPush;
+import com.zeropush.exception.ZeroPushEndpointException;
 import com.zeropush.verify.VerifyCredentialsResponse;
 
 /**
+ * Bean which verifies arbitrary token.
+ *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
 public class ZeroPushCredentialsVerifier
 {
-    @Inject
-    private ZeroPushPropertiesLoader propertyLoader;
-
-    @PostConstruct
-    private void setupZeroPush()
-    {
-        ZeroPush.getConfiguration().setServerToken(propertyLoader.getProperty("zeropush.token.server"));
-        ZeroPush.getConfiguration().setApplicationToken(propertyLoader.getProperty("zeropush.token.app"));
-    }
-
+    /**
+     * Verifies arbitrary token.
+     *
+     * @param token token to verify
+     * @return true if token is valid, false otherwise
+     * @throws ZeroPushEndpointException if {@code token} is null object or an empty String.
+     */
     public boolean verifyToken(String token)
     {
         VerifyCredentialsResponse response = ZeroPush.verification().credentials(token).execute();
 
-        return response.getStatusCode() == 200 && response.getMessage().getMessage().equals("authenticated");
+        return response.getStatusCode() == HttpStatus.SC_OK && response.getMessage().getMessage().equals("authenticated");
     }
 }

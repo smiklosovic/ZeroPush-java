@@ -35,6 +35,7 @@ import org.junit.runners.JUnit4;
 
 import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
+import com.zeropush.exception.ZeroPushEndpointException;
 import com.zeropush.response.ZeroPushResponseError;
 import com.zeropush.test.LoadingPropertiesTestCase;
 import com.zeropush.verify.VerifyCredentialsResponse;
@@ -114,4 +115,13 @@ public class VerificationTestCase extends LoadingPropertiesTestCase
         Assert.assertEquals("app_token", response.getMessage().getAuthTokenType());
     }
 
+    @Test
+    public void nullTokenToVerify()
+    {
+        exception.expect(ZeroPushEndpointException.class);
+        exception.expectMessage("Authentication token to verify specified via credentials(String) was "
+                    + "null object or an empty String.");
+
+        ZeroPush.verification().credentials(null).execute();
+    }
 }

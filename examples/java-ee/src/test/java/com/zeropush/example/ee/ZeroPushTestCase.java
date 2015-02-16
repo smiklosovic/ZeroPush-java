@@ -25,9 +25,6 @@
 package com.zeropush.example.ee;
 
 import java.io.File;
-
-import javax.inject.Inject;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -38,8 +35,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.zeropush.model.ZeroPushNotification;
+import com.zeropush.notify.notification.AndroidPushNotification;
+
 /**
  * This test case runs effectively in embedded Weld EE container.
+ *
+ * Bean instances in test methods are injected there automatically.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
@@ -59,6 +61,7 @@ public class ZeroPushTestCase
         WebArchive war = ShrinkWrap.create(WebArchive.class)
             .addClass(ZeroPushCredentialsVerifier.class)
             .addClass(ZeroPushPropertiesLoader.class)
+            .addClass(ZeroPushNotificationSender.class)
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsResource("zeropush.properties")
             .addAsLibraries(zeropush);
@@ -68,18 +71,27 @@ public class ZeroPushTestCase
         return war;
     }
 
-    @Inject
-    private ZeroPushCredentialsVerifier verifier;
-
     @Test
-    public void verificationOfNonsenseTokenTest()
+    public void verificationOfNonsenseTokenTest(ZeroPushCredentialsVerifier verifier)
     {
         Assert.assertFalse(verifier.verifyToken("nonsense"));
     }
 
     @Test
-    public void verificationOfValidToken()
+    public void verificationOfValidToken(ZeroPushCredentialsVerifier verifier)
     {
         Assert.assertTrue(verifier.verifyToken(System.getProperty("zeropush.token.server")));
+    }
+
+    @Test
+    public void sendNotificationTest(ZeroPushNotificationSender sender)
+    {
+        ZeroPushNotification notification = new AndroidPushNotification.Builder()
+            .addDeviceToken("123456789")
+            .addDatum("alert", "Now Boarding")
+            .addDatum("username", "fred.droid")
+            .build();
+
+        sender.sendNotification(notification);
     }
 }

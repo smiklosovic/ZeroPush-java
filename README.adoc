@@ -47,6 +47,13 @@ ZeroPush.getConfiguration().setServerToken("serve token");
 ZeroPush.getConfiguration().setApplicationToken("application token");
 ----
 
+You can set both keys at one like this:
+
+[source,java]
+----
+ZeroPush.getConfiguration().setTokens(serverKey, applicationKey);
+----
+
 Some ZeroPush REST endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via +getAuthToken()+ method on +ZeroPushConfiguration+. You can decide which token will be returned by this method by calling +preferServerToken()+ or +preferAppToken()+ method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.
 
 === Thread safety
@@ -245,6 +252,15 @@ From now on, all communication with ZeroPush API service will be executed via pr
 === Using client in Android environment
 
 When you use client in Android, you have to provide your own asynchronicity mechanism. If you use it in UI thread, there can be +NetworkOnMainThreadException+ thrown. You can use e.g. +AsyncTask+ class to wrap ZeroPush client into it.
+
+=== How to generate JavaDoc?
+
+[source,bash]
+----
+$ mvn javadoc:aggregate
+----
+
+You find generated JavaDocs in root directory in +target/site/apidocs/index.html+.
 
 === How to execute internal tests?
 
