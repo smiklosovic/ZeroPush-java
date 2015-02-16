@@ -37,7 +37,7 @@ While using ZeroPush client, every endpoint call will result in a Java oneliner 
 
 === Configuration of ZeroPush client
 
-+ZeroPush+ uses default configuration when not set it via its +setConfiguration+ method.
++ZeroPush+ uses default configuration when it is not set via its +setConfiguration+ method.
 
 Before any interaction with ZeroPush server, you have to specify server and application tokens like this:
 
@@ -47,7 +47,7 @@ ZeroPush.getConfiguration().setServerToken("serve token");
 ZeroPush.getConfiguration().setApplicationToken("application token");
 ----
 
-Some endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via +getAuthToken()+ method on +ZeroPushConfiguration+. You can decide which token will be returned by this method by calling +preferServerToken()+ or +preferAppToken()+ method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.
+Some ZeroPush REST endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via +getAuthToken()+ method on +ZeroPushConfiguration+. You can decide which token will be returned by this method by calling +preferServerToken()+ or +preferAppToken()+ method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.
 
 === Thread safety
 
@@ -65,7 +65,7 @@ Building and sending of an Android notification:
 
 [source,java]
 ----
-ZeroPushNotification notification = new AndroidPushNotification.Builder()
+ZeroPushNotification boardingNotification = new AndroidPushNotification.Builder()
     .addDeviceToken(DEVICE_TOKEN)
     .addDatum("alert", "Now Boarding")
     .addDatum("username", "fred.droid")
@@ -73,20 +73,52 @@ ZeroPushNotification notification = new AndroidPushNotification.Builder()
 
 // A built notification is actually sent like this:
 
-ZeroPush.notification(notification).send();
+ZeroPush.notification(boardingNotification).send();
 
 // In order to broadcast it, you have to set broadcasting flag:
 
-ZeroPush.notification(notification).broadcast().send();
+ZeroPush.notification(boardingNotification).broadcast().send();
 
 // You may want to broadcast it only for some channel like this:
 
-ZeroPush.notification(notification).broadcast("channel_name").send();
+ZeroPush.notification(boardingNotification).broadcast("channel_name").send();
 ----
 
-You can check your quotas as well when you execute +getQuota()+ method after +send()+.
+Notification for iOS would be constructed very similarly, for example:
 
-=== Communication with endpoints
+[source,java]
+----
+ZeroPushNotification boardingNotification = new IOSPushNotification.Builder()
+    .addDeviceToken(DEVICE_TOKEN)
+    .alert("Now Boarding")
+    .badge("+1")
+    .category("category1")
+    .contentAvailable()
+    .build();
+
+ZeroPush.notification(boardingNotification).send();    
+----
+
+For iOS/Mac notifications, you can provide +alert+ String by two means. The first one is to specify it directly as a String 
+as shown above. The second option is to use +AlertJSON.Builder+ and build it programmatically like this:
+
+[source,java]
+----
+String alertString = new AlertJSON.Builder()
+    .locArgs("locArc1", "locArc2")
+    .body("hello")
+    .launchImage("image.png")
+    .build();
+----
+
+Pass such constructed +alertString+ to +alert(String)+ method on +IOSPushNotification.Builder+.
+
+=== Quota checking
+
+You can check your quotas as well when you execute +getQuota()+ method on an object returned while executing +send()+. Quotas 
+are read from HTTP headers which are returned to client after the notification sending. 
+
+=== Communication with ZeroPush REST endpoints
 
 Verification of credentials:
 
@@ -184,9 +216,10 @@ Unsubscribe all devices and delete this channel:
 ZeroPush.channels().delete("channel_name").execute();
 ----
 
-=== Inspection of a response from ZeroPush server
+=== Inspection of a response from the ZeroPush server
 
-When you execute +.execute()+ method on ZeroPush oneliner, you get object which represents the actual response from ZeroPush server. You can get error messages via +getResponseError()+.
+When you call +execute()+ method on ZeroPush oneliner, you get object which represents the actual response from ZeroPush server. You can get error messages via +getResponseError()+ 
+and you can inspect returned status code of the response as well by +getStatusCode()+ on every endpoint response object.
 
 === Reaching ZeroPush service behind a proxy
 
