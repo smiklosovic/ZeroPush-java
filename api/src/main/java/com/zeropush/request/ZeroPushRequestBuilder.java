@@ -52,6 +52,8 @@ import com.zeropush.exception.ZeroPushRequestBuilderException;
  */
 public class ZeroPushRequestBuilder
 {
+    private static final String APPLICATION_JSON = "application/json";
+
     private final RequestType requestType;
 
     private final ZeroPushConfiguration configuration;
@@ -153,6 +155,8 @@ public class ZeroPushRequestBuilder
             RequestConfig config = RequestConfig.custom().setProxy(proxyHost).build();
             request.setConfig(config);
         }
+
+        request.addHeader("accept", APPLICATION_JSON);
 
         return request;
     }
