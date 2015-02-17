@@ -48,6 +48,7 @@ public class SafariNotificationSender implements NotificationSender<SafariPushNo
 
     private String channel = null;
 
+    @Override
     public ZeroPushNotificationResponse send(SafariPushNotification pushNotification)
     {
         ZeroPushRequestBuilder requestBuilder = getRequestBuilder(pushNotification);

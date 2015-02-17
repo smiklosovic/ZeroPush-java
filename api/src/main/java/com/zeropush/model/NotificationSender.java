@@ -25,10 +25,19 @@
 package com.zeropush.model;
 
 /**
+ * Implementation of this sender effectively sends a notification to the ZeroPush sever which will
+ * be in turn sent to notification providers.
+ *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
 public interface NotificationSender<T extends ZeroPushNotification>
 {
+    /**
+     * Sends a push notification to ZeroPush server.
+     *
+     * @param pushNotification notification for ZeroPush server.
+     * @return response from ZeroPush server
+     */
     ZeroPushNotificationResponse send(T pushNotification);
 }

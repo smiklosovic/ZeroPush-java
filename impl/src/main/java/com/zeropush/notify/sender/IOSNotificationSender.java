@@ -48,6 +48,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
 
     private String channel = null;
 
+    @Override
     public ZeroPushNotificationResponse send(IOSPushNotification pushNotification)
     {
         ZeroPushRequestBuilder requestBuilder = getRequestBuilder(pushNotification);

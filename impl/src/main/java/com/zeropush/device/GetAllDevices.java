@@ -44,7 +44,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class GetAllDevices extends Endpoint<DevicesResponse>
+public class GetAllDevices implements Endpoint<DevicesResponse>
 {
     private int page = 0;
 

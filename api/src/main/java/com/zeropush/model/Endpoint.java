@@ -33,7 +33,7 @@ import com.zeropush.response.ZeroPushResponse;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public abstract class Endpoint<T extends ZeroPushResponse>
+public interface Endpoint<T extends ZeroPushResponse>
 {
     /**
      * Effectively communicates with ZeroPush servers.
@@ -41,5 +41,5 @@ public abstract class Endpoint<T extends ZeroPushResponse>
      * @return specific response
      * @throws ZeroPushEndpointException
      */
-    public abstract T execute() throws ZeroPushEndpointException;
+    T execute() throws ZeroPushEndpointException;
 }

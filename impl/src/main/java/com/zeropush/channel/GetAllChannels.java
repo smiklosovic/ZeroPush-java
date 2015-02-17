@@ -44,7 +44,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class GetAllChannels extends Endpoint<ChannelsResponse>
+public class GetAllChannels implements Endpoint<ChannelsResponse>
 {
     private int page = 0;
 

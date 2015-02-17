@@ -42,7 +42,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class DeleteChannel extends Endpoint<ChannelResponse>
+public class DeleteChannel implements Endpoint<ChannelResponse>
 {
     private final String channel;
 

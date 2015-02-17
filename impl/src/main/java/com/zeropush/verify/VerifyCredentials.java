@@ -43,12 +43,12 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class VerifyCredentials extends Endpoint<VerifyCredentialsResponse>
+public class VerifyCredentials implements Endpoint<VerifyCredentialsResponse>
 {
     private String authToken;
 
     private boolean authTokenSet = false;
-    
+
     public VerifyCredentials()
     {
     }

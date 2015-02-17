@@ -42,7 +42,7 @@ import com.zeropush.subscribe.SubscriptionResponse.SubscriptionEntry;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class Subscription extends Endpoint<SubscriptionResponse>
+public class Subscription implements Endpoint<SubscriptionResponse>
 {
     private final String deviceToken;
 

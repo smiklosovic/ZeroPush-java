@@ -41,7 +41,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class UnRegister extends Endpoint<RegisterResponse>
+public class UnRegister implements Endpoint<RegisterResponse>
 {
     private final String deviceToken;
 

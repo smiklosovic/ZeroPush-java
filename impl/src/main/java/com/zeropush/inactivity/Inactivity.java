@@ -44,7 +44,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class Inactivity extends Endpoint<InactivityResponse>
+public class Inactivity implements Endpoint<InactivityResponse>
 {
     @Override
     public InactivityResponse execute() throws ZeroPushEndpointException

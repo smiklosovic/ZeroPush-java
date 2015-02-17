@@ -30,6 +30,8 @@ import java.util.List;
 import com.zeropush.exception.ZeroPushNotificationValidationException;
 
 /**
+ * Represents base of all possible notification types.
+ *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
@@ -47,6 +49,11 @@ public abstract class ZeroPushNotification
         this.deviceTokens = deviceTokens;
     }
 
+    /**
+     * Tells which platform this notification targets.
+     *
+     * @return platfrom which this notification is sent to
+     */
     public abstract Platform provides();
 
     /**

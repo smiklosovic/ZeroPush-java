@@ -42,7 +42,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class GetDevice extends Endpoint<DeviceResponse>
+public class GetDevice implements Endpoint<DeviceResponse>
 {
     private final String deviceToken;
 

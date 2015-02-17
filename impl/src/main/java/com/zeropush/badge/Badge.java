@@ -43,7 +43,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class Badge extends Endpoint<BadgeResponse>
+public class Badge implements Endpoint<BadgeResponse>
 {
     private final String deviceToken;
 

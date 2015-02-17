@@ -40,7 +40,7 @@ import com.zeropush.response.ZeroPushResponseError;
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public final class NotificationRestSender
+class NotificationRestSender
 {
     public ZeroPushNotificationResponse send(ZeroPushRequestBuilder requestbuilder, boolean broadcast)
     {
