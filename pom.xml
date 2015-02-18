@@ -79,6 +79,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <tag>HEAD</tag>
     </scm>
 
+    <!-- Prerequisites -->
+    <prerequisites>
+       <maven>3.0.0</maven>
+    </prerequisites>
+
     <!-- Properties -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

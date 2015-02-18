@@ -25,6 +25,19 @@ in your Maven projects:
 </dependency>
 ----
 
+== Installation
+
+This project is managed with Maven 3. In order to install artifacts without tests, you have to execute this:
+
+[source,bash]
+----
+$ mvn clean install -DskipTests
+----
+
+Not specifying +skipTests+ property will lead to test execution as well. You have to follow https://github.com/ZeroPush/ZeroPush-java#how-to-execute-internal-tests[these instructions] in order to be able to execute tests.
+
+Note that this installation procedure holds only for snapshot version of the library. While using released version, it will be automatically downloaded from Maven Central.
+
 == Usage
 
 The only entry point to the client is via class +com.zeropush.ZeroPush+.
