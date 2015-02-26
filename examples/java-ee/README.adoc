@@ -6,7 +6,7 @@ The project consists of three CDI beans and http://arquillian.org/[Arquillian te
 
 The first bean, +ZeroPushPropertiesLoader+, loads properties from +zeropush.properties+ file. This property file is put into ShrinkWrap archive from test resources and actual values of this property file are filtered upon test execution and filtered values are taken from system variables passed to Maven build from the command line, hence the only place you specify credentials is on the command line.
 
-The second bean, +ZeroPushCredentialsVerifier+ verifies arbitrary token by +verifyToken+ method agains ZeroPush server.
+The second bean, +ZeroPushCredentialsVerifier+ verifies arbitrary token by +verifyToken+ method against ZeroPush server.
 
 The third bean, +ZeroPushNotificationSender+, sends arbitrary notification. This bean injects +ZeroPushPropertiesLoader+ and sets loaded keys to +ZeroPush+ client.
 
@@ -25,4 +25,4 @@ Tests are executed via Maven like this:
 $ mvn clean test -Dzeropush.token.server="token" -Dzeropush.token.app="token"
 ----
 
-Grap these valid tokens from your web console.
+Grab these valid tokens from your web console.
