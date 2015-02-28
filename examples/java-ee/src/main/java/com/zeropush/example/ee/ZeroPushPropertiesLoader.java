@@ -30,8 +30,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
-
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
@@ -42,10 +40,9 @@ public class ZeroPushPropertiesLoader
 
     private static final String PROPERTIES_FILE_NAME = "zeropush.properties";
 
-    private Properties properties = null;
+    private static final Properties properties;
 
-    @PostConstruct
-    private void setupProperties()
+    static
     {
         properties = getProperties();
     }
@@ -55,9 +52,9 @@ public class ZeroPushPropertiesLoader
         return properties.getProperty(propertyKey);
     }
 
-    private Properties getProperties()
+    private static Properties getProperties()
     {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
+        InputStream is = ZeroPushPropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
 
         if (is == null)
         {
