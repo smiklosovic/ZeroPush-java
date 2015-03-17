@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Zeropush-java by ZeroPush</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Zeropush-java</h1>
+        <p>A java library for the ZeroPush API</p>
+
+        <p class="view"><a href="https://github.com/ZeroPush/ZeroPush-java">View the Project on GitHub <small>ZeroPush/ZeroPush-java</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ZeroPush/ZeroPush-java/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ZeroPush/ZeroPush-java/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ZeroPush/ZeroPush-java">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="zeropush-java-client" class="anchor" href="#zeropush-java-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>ZeroPush Java client</h2>
+
+<p>This repository is the home of the ZeroPush client in Java.</p>
+
+<p>In order to use Java client in your Java EE / SE application, you have to use this dependency in your Maven project:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.zeropush&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;zeropush&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;<span class="pl-c">&lt;!-- prefered version --&gt;</span>&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<p>In order to use Java client in Android, you have to use this dependency 
+in your Maven projects:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.zeropush&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;zeropush-android&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;<span class="pl-c">&lt;!-- prefered version --&gt;</span>&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>This project is managed with Maven 3. In order to install artifacts without tests, you have to execute this:</p>
+
+<div class="highlight highlight-shell"><pre>$ mvn clean install -DskipTests</pre></div>
+
+<p>Not specifying <code>skipTests</code> property will lead to test execution as well. You have to follow <a href="https://github.com/ZeroPush/ZeroPush-java#how-to-execute-internal-tests">https://github.com/ZeroPush/ZeroPush-java#how-to-execute-internal-tests</a> in order to be able to execute tests.</p>
+
+<p>Note that this installation procedure holds only for snapshot version of the library. While using released version, it will be automatically downloaded from Maven Central.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The only entry point to the client is via class <code>com.zeropush.ZeroPush</code>.</p>
+
+<p>ZeroPush Java client is very intuitive and easy to use. The client is able to communicate with every ZeroPush API server endpoint. You can also send push notifications from the client to registered devices hence you can use this library from your Java backends.</p>
+
+<p>The usage of the client is exactly the same for Java EE / SE and Android.</p>
+
+<p>While using ZeroPush client, every endpoint call will result in a Java oneliner since we are using fluent API heavily.</p>
+
+<h3>
+<a id="configuration-of-zeropush-client" class="anchor" href="#configuration-of-zeropush-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration of ZeroPush client</h3>
+
+<p><code>ZeroPush</code> uses default configuration when it is not set via its <code>setConfiguration</code> method.</p>
+
+<p>Before any interaction with ZeroPush server, you have to specify server and application tokens like this:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>getConfiguration()<span class="pl-k">.</span>setServerToken(<span class="pl-s1"><span class="pl-pds">"</span>serve token<span class="pl-pds">"</span></span>);
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>getConfiguration()<span class="pl-k">.</span>setApplicationToken(<span class="pl-s1"><span class="pl-pds">"</span>application token<span class="pl-pds">"</span></span>);</pre></div>
+
+<p>You can set both keys at one like this:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>getConfiguration()<span class="pl-k">.</span>setTokens(serverKey, applicationKey);</pre></div>
+
+<p>Some ZeroPush REST endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via <code>getAuthToken()</code> method on <code>ZeroPushConfiguration</code>. You can decide which token will be returned by this method by calling <code>preferServerToken()</code> or <code>preferAppToken()</code> method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.</p>
+
+<h3>
+<a id="thread-safety" class="anchor" href="#thread-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a>Thread safety</h3>
+
+<p>ZeroPush client is designed to be thread safe. You can use <code>ZeroPush</code> client in two separate threads. <code>ZeroPushConfiguration</code> is persisted in <code>ThreadLocal</code> so invocations of <code>ZeroPush</code> on different threads will use different configurations.</p>
+
+<h3>
+<a id="sending-of-notifications" class="anchor" href="#sending-of-notifications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sending of notifications</h3>
+
+<p>The sending of a  push notification is in general divided into two steps. Firstly, you have to build your notification to be sent. The second step is to actually send it. Additionally, you can decide whether you want to broadcast the built notification or whether you want to broadcast it only to some channel.</p>
+
+<p>There are builders for every notification type (Android, iOS/Macs, Safari). For the brevity, only Android notification will be shown here. All other notification types are used similarly.</p>
+
+<p>The notification builders copy all options described <a href="https://zeropush.com/documentation/api_reference#notify">https://zeropush.com/documentation/api_reference#notify</a>. Notification builders have setters for every possible option for particular notification type. There are <code>IOSPushNotification</code> and <code>SafariPushNotification</code> classes for notifications meant to be sent to iOS/Macs and Safari respectively.</p>
+
+<p>Building and sending of an Android notification:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPushNotification</span> boardingNotification <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">AndroidPushNotification</span>.<span class="pl-stj">Builder</span>()
+    .addDeviceToken(<span class="pl-c1">DEVICE_TOKEN</span>)
+    .addDatum(<span class="pl-s1"><span class="pl-pds">"</span>alert<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>Now Boarding<span class="pl-pds">"</span></span>)
+    .addDatum(<span class="pl-s1"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>fred.droid<span class="pl-pds">"</span></span>)
+    .build();
+
+<span class="pl-c">// A built notification is actually sent like this:</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>notification(boardingNotification)<span class="pl-k">.</span>send();
+
+<span class="pl-c">// In order to broadcast it, you have to set broadcasting flag:</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>notification(boardingNotification)<span class="pl-k">.</span>broadcast()<span class="pl-k">.</span>send();
+
+<span class="pl-c">// You may want to broadcast it only for some channel like this:</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>notification(boardingNotification)<span class="pl-k">.</span>broadcast(<span class="pl-s1"><span class="pl-pds">"</span>channel_name<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>send();</pre></div>
+
+<p>Notification for iOS would be constructed very similarly, for example:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPushNotification</span> boardingNotification <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">IOSPushNotification</span>.<span class="pl-stj">Builder</span>()
+    .addDeviceToken(<span class="pl-c1">DEVICE_TOKEN</span>)
+    .alert(<span class="pl-s1"><span class="pl-pds">"</span>Now Boarding<span class="pl-pds">"</span></span>)
+    .badge(<span class="pl-s1"><span class="pl-pds">"</span>+1<span class="pl-pds">"</span></span>)
+    .category(<span class="pl-s1"><span class="pl-pds">"</span>category1<span class="pl-pds">"</span></span>)
+    .contentAvailable()
+    .build();
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>notification(boardingNotification)<span class="pl-k">.</span>send();    </pre></div>
+
+<p>For iOS/Mac notifications, you can provide <code>alert</code> String by two means. The first one is to specify it directly as a String 
+as shown above. The second option is to use <code>AlertJSON.Builder</code> and build it programmatically like this:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">String</span> alertString <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">AlertJSON</span>.<span class="pl-stj">Builder</span>()
+    .locArgs(<span class="pl-s1"><span class="pl-pds">"</span>locArc1<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>locArc2<span class="pl-pds">"</span></span>)
+    .body(<span class="pl-s1"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>)
+    .launchImage(<span class="pl-s1"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>)
+    .build();</pre></div>
+
+<p>Pass such constructed <code>alertString</code> to <code>alert(String)</code> method on <code>IOSPushNotification.Builder</code>.</p>
+
+<h3>
+<a id="quota-checking" class="anchor" href="#quota-checking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quota checking</h3>
+
+<p>You can check your quotas as well when you execute <code>getQuota()</code> method on an object returned while executing <code>send()</code>. Quotas 
+are read from HTTP headers which are returned to client after the notification sending. </p>
+
+<h3>
+<a id="communication-with-zeropush-rest-endpoints" class="anchor" href="#communication-with-zeropush-rest-endpoints" aria-hidden="true"><span class="octicon octicon-link"></span></a>Communication with ZeroPush REST endpoints</h3>
+
+<p>Verification of credentials:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>verification()<span class="pl-k">.</span>credentials(<span class="pl-s1"><span class="pl-pds">"</span>your key<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Registration of a device:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-c">// registering</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>registration()<span class="pl-k">.</span>register(<span class="pl-s1"><span class="pl-pds">"</span>device token<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();
+
+<span class="pl-c">// unregistering</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>registration()<span class="pl-k">.</span>unregister(<span class="pl-s1"><span class="pl-pds">"</span>device token<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Subscription of a device:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-c">// subscription</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>subscription()<span class="pl-k">.</span>subscribe(<span class="pl-s1"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>channel<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();
+
+<span class="pl-c">// unsubscription</span>
+
+<span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>subscription()<span class="pl-k">.</span>unsubscribe(<span class="pl-s1"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>channel<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Getting of inactive devices:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>inactivity()<span class="pl-k">.</span>get()<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Setting of a badge:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>badge()<span class="pl-k">.</span>setBadge(<span class="pl-s1"><span class="pl-pds">"</span>device token<span class="pl-pds">"</span></span>, <span class="pl-k">&lt;</span>integer<span class="pl-k">&gt;</span>)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Getting of a single device:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">Device</span> dev <span class="pl-k">=</span> <span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>devices()<span class="pl-k">.</span>get(<span class="pl-s1"><span class="pl-pds">"</span>device token<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>getDevice();</pre></div>
+
+<p>Getting of devices:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-st">List&lt;<span class="pl-stj">Device</span>&gt;</span> devices <span class="pl-k">=</span> <span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>devices()<span class="pl-k">.</span>get()<span class="pl-k">.</span>execute()<span class="pl-k">.</span>getDevices();</pre></div>
+
+<p>Replacing of channels for some device token:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>devices()<span class="pl-k">.</span>replaceChannels(<span class="pl-s1"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>, array of channels)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Appending channels to some device token:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>devices()<span class="pl-k">.</span>appendChannels(<span class="pl-s1"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>, array of channels)<span class="pl-k">.</span>execute();</pre></div>
+
+<p>Getting of single channel:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">Channel</span> ch <span class="pl-k">=</span> <span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>channels()<span class="pl-k">.</span>get(<span class="pl-s1"><span class="pl-pds">"</span>channel<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>getChannel();</pre></div>
+
+<p>Getting of all channels:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-st">List&lt;<span class="pl-stj">Channel</span>&gt;</span> channels <span class="pl-k">=</span> <span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>channels()<span class="pl-k">.</span>get()<span class="pl-k">.</span>execute()<span class="pl-k">.</span>getChannels();</pre></div>
+
+<p>Unsubscribe all devices and delete this channel:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>channels()<span class="pl-k">.</span>delete(<span class="pl-s1"><span class="pl-pds">"</span>channel_name<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute();</pre></div>
+
+<h3>
+<a id="inspection-of-a-response-from-the-zeropush-server" class="anchor" href="#inspection-of-a-response-from-the-zeropush-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inspection of a response from the ZeroPush server</h3>
+
+<p>When you call <code>execute()</code> method on ZeroPush oneliner, you get object which represents the actual response from ZeroPush server. You can get error messages via <code>getResponseError()</code> 
+and you can inspect returned status code of the response as well by <code>getStatusCode()</code> on every endpoint response object.</p>
+
+<h3>
+<a id="reaching-zeropush-service-behind-a-proxy" class="anchor" href="#reaching-zeropush-service-behind-a-proxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reaching ZeroPush service behind a proxy</h3>
+
+<p>In case you are behind a proxy server and you want to reach ZeroPush API server, you have to create <code>Proxy</code> object and set it to <code>ZeroPushConfiguration</code> like the following:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">Proxy</span> proxy <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">ZeroPushConfiguration</span>.<span class="pl-stj">ProxyBuilder</span>()
+    .withHostname(<span class="pl-s1"><span class="pl-pds">"</span>127.0.0.1<span class="pl-pds">"</span></span>) <span class="pl-c">// by default "localhost"</span>
+    .withPort(<span class="pl-c1">8888</span>) <span class="pl-c">// by default "8080"</span>
+    .build();</pre></div>
+
+<p>After building <code>Proxy</code>, pass it into the configuration:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">ZeroPush</span><span class="pl-k">.</span>getConfiguration()<span class="pl-k">.</span>setProxy(proxy);</pre></div>
+
+<p>From now on, all communication with ZeroPush API service will be executed via proxy.</p>
+
+<h3>
+<a id="using-client-in-android-environment" class="anchor" href="#using-client-in-android-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using client in Android environment</h3>
+
+<p>When you use client in Android, you have to provide your own asynchronicity mechanism. If you use it in UI thread, there can be <code>NetworkOnMainThreadException</code> thrown. You can use e.g. <code>AsyncTask</code> class to wrap ZeroPush client into it.</p>
+
+<h3>
+<a id="how-to-generate-javadoc" class="anchor" href="#how-to-generate-javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to generate JavaDoc?</h3>
+
+<div class="highlight highlight-shell"><pre>$ mvn javadoc:aggregate</pre></div>
+
+<p>You find generated JavaDocs in root directory in <code>target/site/apidocs/index.html</code>.</p>
+
+<h3>
+<a id="how-to-execute-internal-tests" class="anchor" href="#how-to-execute-internal-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to execute internal tests?</h3>
+
+<p>Implementation artifact contains integration tests. You can execute these tests in two ways.</p>
+
+<p>The first option:</p>
+
+<div class="highlight highlight-shell"><pre>$ mvn clean <span class="pl-s3">test</span></pre></div>
+
+<p>Tests use server token and app token from your ZeroPush web console. You have to specify them in order to be able to execute tests. These tests will operate against the application with the specified keys.</p>
+
+<p>Keys are saved in property file located in <code>src/test/resources/zeropush.properties</code>. The content of the file has to be like this:</p>
+
+<div class="highlight highlight-shell"><pre>zeropush.token.server=<span class="pl-k">&lt;</span>your server token<span class="pl-k">&gt;</span>
+zeropush.token.app=<span class="pl-k">&lt;</span>your app token<span class="pl-k">&gt;</span></pre></div>
+
+<p>The second option is to specify tokens on a command line so these credentials will not be saved in property file (hence not committed).</p>
+
+<div class="highlight highlight-shell"><pre>$ mvn clean <span class="pl-s3">test</span> -Dzeropush.token.server=<span class="pl-k">&lt;</span>token<span class="pl-k">&gt;</span> -Dzeropush.token.app=<span class="pl-k">&lt;</span>token<span class="pl-k">&gt;</span></pre></div>
+
+<p>In case you execute tests by the second option and there are tokens specified in property file as well, system properties will override these in property file. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ZeroPush">ZeroPush</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
