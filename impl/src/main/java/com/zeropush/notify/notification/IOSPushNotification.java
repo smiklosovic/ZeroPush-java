@@ -193,7 +193,7 @@ public final class IOSPushNotification extends ZeroPushNotification
          * The text of the notification to be displayed. If you want to customize the notification, you may pass here whatever
          * {@link AlertJSON.Builder#build()} returns.
          *
-         * @param alert
+         * @param alert altert to set as string
          * @return this builder
          */
         public Builder alert(String alert)
@@ -206,7 +206,7 @@ public final class IOSPushNotification extends ZeroPushNotification
          * The number to display on the app's icon badge. badge can also auto-increment or auto-decrement by passing "+1" or
          * "-1" respectively.
          *
-         * @param badge
+         * @param badge badge to set as string
          * @return this builder
          */
         public Builder badge(String badge)
@@ -218,7 +218,7 @@ public final class IOSPushNotification extends ZeroPushNotification
         /**
          * A sound to play along with the notification
          *
-         * @param sound
+         * @param sound sound to play when notification arrives
          * @return this builder
          */
         public Builder sound(String sound)
@@ -230,7 +230,7 @@ public final class IOSPushNotification extends ZeroPushNotification
         /**
          * A JSON dictionary of extra data to send with the notification
          *
-         * @param info
+         * @param info extra data to send with the notification as a JSON dictionary
          * @return this builder
          */
         public Builder info(String info)
@@ -243,7 +243,7 @@ public final class IOSPushNotification extends ZeroPushNotification
          * A UNIX epoch date expressed in seconds (UTC) that identifies when the notification is no longer valid and can be
          * discarded.
          *
-         * @param expiry
+         * @param expiry expiration date of the notification in seconds
          * @return this builder
          */
         public Builder expiry(int expiry)
@@ -270,7 +270,7 @@ public final class IOSPushNotification extends ZeroPushNotification
         /**
          * A string matching the identifier of a registered interactive notification type.
          *
-         * @param category
+         * @param category string representing the identified of a registered interactive notification type
          * @return this builder
          */
         public Builder category(String category)

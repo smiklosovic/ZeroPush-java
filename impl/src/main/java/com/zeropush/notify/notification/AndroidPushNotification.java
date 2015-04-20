@@ -50,7 +50,7 @@ public final class AndroidPushNotification extends ZeroPushNotification
 
     private String collapseKey;
 
-    private boolean delayWhileIdle;
+    private boolean delayWhileIdle = false;
 
     private int timeToLive;
 
@@ -112,7 +112,7 @@ public final class AndroidPushNotification extends ZeroPushNotification
 
         String collapseKey;
 
-        boolean delayWhileIdle;
+        boolean delayWhileIdle = false;
 
         int timeToLive;
 
@@ -200,14 +200,14 @@ public final class AndroidPushNotification extends ZeroPushNotification
          * messages when the device is offline, so that only the last message gets sent to the client. This is intended to avoid
          * sending too many messages to the phone when it comes back online. Note that since there is no guarantee of the order
          * in which messages get sent, the "last" message may not actually be the last message sent by the application server.
-         * Messages with collapse keys are also called send-to-sync messages. <br/>
-         * <br/>
+         * Messages with collapse keys are also called send-to-sync messages. <br>
+         * <br>
          * Note: GCM allows a maximum of 4 different collapse keys to be used by the GCM server at any given time. In other
          * words, the GCM server can simultaneously store 4 different send-to-sync messages per device, each with a different
          * collapse key. If you exceed this number GCM will only keep 4 collapse keys, with no guarantees about which ones they
          * will be
          *
-         * @param collapseKey
+         * @param collapseKey collape key for push notification
          * @return this builder
          */
         public Builder collapseKey(String collapseKey)
@@ -221,12 +221,11 @@ public final class AndroidPushNotification extends ZeroPushNotification
          * for the device to become active, and then only the last message for each collapse_key value will be sent. The default
          * value is false.
          *
-         * @param delayWhileIdle
          * @return this builder
          */
-        public Builder delayWhileIdle(boolean delayWhileIdle)
+        public Builder delayWhileIdle()
         {
-            this.delayWhileIdle = delayWhileIdle;
+            delayWhileIdle = true;
             return this;
         }
 
@@ -234,7 +233,7 @@ public final class AndroidPushNotification extends ZeroPushNotification
          * This parameter specifies how long (in seconds) the message should be kept on GCM storage if the device is offline.
          * Optional (default time-to-live is 4 weeks, and must be set as a JSON number).
          *
-         * @param timeToLive
+         * @param timeToLive number specifying how long the message should be kept on GCM storage in seconds
          * @return this builder
          */
         public Builder timeToLive(int timeToLive)

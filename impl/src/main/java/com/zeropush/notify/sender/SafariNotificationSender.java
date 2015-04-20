@@ -112,7 +112,7 @@ public class SafariNotificationSender implements NotificationSender<SafariPushNo
 
         private String channel;
 
-        private int expiry;
+        private long expiry;
 
         private String label;
 
@@ -139,7 +139,7 @@ public class SafariNotificationSender implements NotificationSender<SafariPushNo
             this.body = body;
         }
 
-        public RequestBuilderFactory expiry(int expiry)
+        public RequestBuilderFactory expiry(long expiry)
         {
             this.expiry = expiry;
             return this;

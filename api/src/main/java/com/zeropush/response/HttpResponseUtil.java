@@ -45,7 +45,7 @@ public class HttpResponseUtil
 
     /**
      *
-     * @param response
+     * @param response reponse to operate upon
      * @throws IllegalStateException if {@code response} is a null object
      */
     public HttpResponseUtil(HttpResponse response)
@@ -61,6 +61,7 @@ public class HttpResponseUtil
     /**
      *
      * @param deserializationClass class to which a body of request will be deserialized to
+     * @param <T> type of class to deserialize the body of the request to
      * @return deserialized body of a request
      * @throws ZeroPushEndpointException when deserialization was unsuccessful
      */

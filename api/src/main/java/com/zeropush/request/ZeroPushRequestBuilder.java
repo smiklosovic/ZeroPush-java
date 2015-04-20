@@ -94,6 +94,10 @@ public class ZeroPushRequestBuilder
         return withParameter("device_token", deviceToken);
     }
 
+    public ZeroPushRequestBuilder withParameter(String name, long value) {
+        return withParameter(name, Long.toString(value));
+    }
+
     public ZeroPushRequestBuilder withParameter(String name, int value)
     {
         return withParameter(name, Integer.toString(value));

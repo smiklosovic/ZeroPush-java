@@ -39,7 +39,7 @@ public interface Endpoint<T extends ZeroPushResponse>
      * Effectively communicates with ZeroPush servers.
      *
      * @return specific response
-     * @throws ZeroPushEndpointException
+     * @throws ZeroPushEndpointException in case execution failed
      */
     T execute() throws ZeroPushEndpointException;
 }

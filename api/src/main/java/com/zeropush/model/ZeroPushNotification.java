@@ -59,7 +59,7 @@ public abstract class ZeroPushNotification
     /**
      * Validates built notification.
      *
-     * @throws ZeroPushNotificationValidationException
+     * @throws ZeroPushNotificationValidationException in case notification is not valid
      */
     public abstract void validate() throws ZeroPushNotificationValidationException;
 }

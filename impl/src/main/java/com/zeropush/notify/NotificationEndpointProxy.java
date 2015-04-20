@@ -76,6 +76,7 @@ public class NotificationEndpointProxy
     /**
      * Flag method for broadcasting specified {@link ZeroPushNotification} only to specified channel.
      *
+     * @param channel channel to which the push notification will be broadcast
      * @return {@link NotificationEndpointProxy}
      */
     public NotificationEndpointProxy broadcast(String channel)

@@ -57,6 +57,8 @@ public final class ZeroPush
 
     /**
      * Gets and deletes a channel.
+     *
+     * @return proxy dealing with channel management
      */
     public static ChannelsEndpointProxy channels()
     {
@@ -65,12 +67,19 @@ public final class ZeroPush
 
     /**
      * Gets a single device or all devices.
+     *
+     * @return proxy dealing with devices management
      */
     public static DevicesEndpointProxy devices()
     {
         return new DevicesEndpointProxy();
     }
 
+    /**
+     * Verifies credentials.
+     *
+     * @return proxy dealing with verification of credentials
+     */
     public static VerifyEndpointProxy verification()
     {
         return new VerifyEndpointProxy();
@@ -78,6 +87,8 @@ public final class ZeroPush
 
     /**
      * Registers devices.
+     *
+     * @return proxy dealing with device registration
      */
     public static RegisterEndpointProxy registration()
     {
@@ -86,6 +97,8 @@ public final class ZeroPush
 
     /**
      * Subscribes a device to some channel.
+     *
+     * @return proxy dealing with subscription
      */
     public static SubscriptionEndpointProxy subscription()
     {
@@ -94,6 +107,8 @@ public final class ZeroPush
 
     /**
      * Sets a device's badge number to a given value.
+     *
+     * @return proxy dealing with badges
      */
     public static BadgeEndpointProxy badge()
     {
@@ -102,6 +117,8 @@ public final class ZeroPush
 
     /**
      * Gets inactivities.
+     *
+     * @return inactivities proxy
      */
     public static InactivityEndpointProxy inactivity()
     {
@@ -155,7 +172,7 @@ public final class ZeroPush
 
     /**
      *
-     * @param configuration
+     * @param configuration configuration to set for this ZeroPush instance
      * @throws IllegalArgumentException iff {@code configuration} is a null object
      */
     public static void setConfiguration(ZeroPushConfiguration configuration)

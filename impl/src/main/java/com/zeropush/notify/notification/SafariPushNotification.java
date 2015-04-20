@@ -52,7 +52,7 @@ public final class SafariPushNotification extends ZeroPushNotification
 
     private String label;
 
-    private int expiry;
+    private long expiry;
 
     private SafariPushNotification(Builder builder)
     {
@@ -104,7 +104,7 @@ public final class SafariPushNotification extends ZeroPushNotification
         return label;
     }
 
-    public int getExpiry()
+    public long getExpiry()
     {
         return expiry;
     }
@@ -127,7 +127,7 @@ public final class SafariPushNotification extends ZeroPushNotification
 
         String label;
 
-        int expiry = 0;
+        long expiry = 0;
 
         public SafariPushNotification build()
         {
@@ -173,7 +173,7 @@ public final class SafariPushNotification extends ZeroPushNotification
         /**
          *
          * @param title The title of the notification to display. Only 1 line is visible and should be short.
-         * @return
+         * @return this builder
          */
         public Builder title(String title)
         {
@@ -184,7 +184,7 @@ public final class SafariPushNotification extends ZeroPushNotification
         /**
          *
          * @param body The body of the notification. About 4 lines are visible.
-         * @return
+         * @return this builder
          */
         public Builder body(String body)
         {
@@ -195,7 +195,7 @@ public final class SafariPushNotification extends ZeroPushNotification
         /**
          *
          * @param urlArg value to substitute placeholders of {@code urlFormatString} defined in {@code website.json}.
-         * @return
+         * @return this builder
          */
         public Builder addUrlArg(String urlArg)
         {
@@ -209,8 +209,8 @@ public final class SafariPushNotification extends ZeroPushNotification
 
         /**
          *
-         * @param urlArg values to substitute placeholders of {@code urlFormatString} defined in {@code website.json}.
-         * @return
+         * @param urlArgs values to substitute placeholders of {@code urlFormatString} defined in {@code website.json}.
+         * @return this builder
          */
         public Builder addUrlArgs(String... urlArgs)
         {
@@ -227,8 +227,8 @@ public final class SafariPushNotification extends ZeroPushNotification
 
         /**
          *
-         * @param urlArg list of values to substitute placeholders of {@code urlFormatString} defined in {@code website.json}.
-         * @return
+         * @param urlArgs list of values to substitute placeholders of {@code urlFormatString} defined in {@code website.json}.
+         * @return this builder
          */
         public Builder addUrlArgs(List<String> urlArgs)
         {
@@ -245,10 +245,10 @@ public final class SafariPushNotification extends ZeroPushNotification
 
         /**
          * The label of the action button, if the user sets the notifications to appear as alerts. This label should be
-         * succinct, such as “Details” or “Read more”. If omitted, the default value is “Show”.
+         * succinct, such as "Details" or "Read more". If omitted, the default value is "Show".
          *
-         * @param label
-         * @return
+         * @param label label of the action button
+         * @return this builder
          */
         public Builder label(String label)
         {
@@ -259,12 +259,12 @@ public final class SafariPushNotification extends ZeroPushNotification
         /**
          *
          * @param expiry A UNIX epoch date expressed in seconds (UTC) that identifies when the notification is no longer valid
-         *        and can be discarded.
-         * @return
+         *        and can be discarded. In case {@code expirty} is lower then 0, it is not taken into consideration
+         * @return this builder
          */
-        public Builder expiry(int expiry)
+        public Builder expiry(long expiry)
         {
-            if (expiry > 0)
+            if (System.currentTimeMillis()/1000 < expiry)
             {
                 this.expiry = expiry;
             }
