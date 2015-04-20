@@ -26,7 +26,6 @@ package com.zeropush.devices;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -37,6 +36,7 @@ import org.junit.BeforeClass;
 import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
 import com.zeropush.register.RegisterResponse;
+import com.zeropush.test.util.Utils;
 
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
@@ -44,7 +44,7 @@ import com.zeropush.register.RegisterResponse;
  */
 public class AbstractZeroPushMultiDeviceRegistrationTestCase
 {
-    protected static final String DEVICE_TOKEN = "1234567890";
+    protected static String DEVICE_TOKEN;
 
     protected static final String DEVICE_CHANNEL = "testing_channel";
 
@@ -55,6 +55,8 @@ public class AbstractZeroPushMultiDeviceRegistrationTestCase
     @BeforeClass
     public static void setup()
     {
+        DEVICE_TOKEN = Utils.randomAlphanumeric(100);
+
         ZeroPush.setConfiguration(new ZeroPushConfiguration()); // only for testing purposes
         ZeroPush.getConfiguration().setServerToken(System.getProperty("zeropush.token.server"));
         ZeroPush.getConfiguration().setApplicationToken(System.getProperty("zeropush.token.app"));
@@ -93,9 +95,7 @@ public class AbstractZeroPushMultiDeviceRegistrationTestCase
     {
         for (int i = 0; i < numberofregistrations; i++)
         {
-            String deviceToken = UUID.randomUUID().toString().replace("-", "");
-
-            devicetokens.add(deviceToken);
+            devicetokens.add(Utils.randomAlphanumeric(100));
         }
     }
 }

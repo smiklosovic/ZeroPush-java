@@ -24,56 +24,54 @@
  */
 package com.zeropush.model;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.regex.Pattern;
 
 import com.zeropush.exception.InvalidDeviceTokenException;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
 
 /**
- * Represents base of all possible notification types.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public abstract class ZeroPushNotification
+public class TokenValidator
 {
-    private List<String> deviceTokens;
 
-    public List<String> getDeviceTokens()
-    {
-        return Collections.unmodifiableList(deviceTokens);
-    }
+    private static final Pattern ANDROID_DEVICE_TOKEN = Pattern.compile("(?i)[0-9a-z\\-_]{100,}");
+
+    private static final Pattern IOS_DEVICE_TOKEN = Pattern.compile("(?i)[a-f0-9 -]{64,}");
 
     /**
+     * Validates a token for given platform.
      *
-     * @param deviceTokens
-     * @throws InvalidDeviceTokenException if some of tokens is not valid
-     * @see TokenValidator
+     * @param platform platform of a token to validate
+     * @param token token to validate
+     * @throws InvalidDeviceTokenException if token is not valid
+     * @throws IllegalArgumentException if token is a null object or an empty String
      */
-    protected void setDeviceTokens(List<String> deviceTokens)
+    public void validate(Platform platform, String token) throws InvalidDeviceTokenException
     {
-        TokenValidator tokenValidator = new TokenValidator();
-
-        for (String token : deviceTokens)
+        if (token == null || token.isEmpty())
         {
-            tokenValidator.validate(provides(), token);
+            throw new IllegalArgumentException("Token to validate is a null object or an empty String!");
         }
 
-        this.deviceTokens = deviceTokens;
+        boolean valid = false;
+
+        switch (platform)
+        {
+            case ANDROID_GCM:
+                valid = ANDROID_DEVICE_TOKEN.matcher(token).matches();
+            case SAFARI:
+            case IOS:
+                valid = IOS_DEVICE_TOKEN.matcher(token).matches();
+                break;
+            default:
+                throw new IllegalStateException("");
+        }
+
+        if (!valid)
+        {
+            throw new InvalidDeviceTokenException(String.format("Token %s is not valid", token));
+        }
     }
-
-    /**
-     * Tells which platform this notification targets.
-     *
-     * @return platfrom which this notification is sent to
-     */
-    public abstract Platform provides();
-
-    /**
-     * Validates built notification.
-     *
-     * @throws ZeroPushNotificationValidationException in case notification is not valid
-     */
-    public abstract void validate() throws ZeroPushNotificationValidationException;
 }

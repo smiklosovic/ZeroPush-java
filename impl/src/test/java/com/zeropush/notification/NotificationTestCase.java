@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.zeropush.ZeroPush;
+import com.zeropush.exception.InvalidDeviceTokenException;
 import com.zeropush.exception.ZeroPushNotificationValidationException;
 import com.zeropush.exception.ZeroPushRequestBuilderException;
 import com.zeropush.model.ZeroPushNotification;
@@ -75,6 +76,17 @@ public class NotificationTestCase extends AbstractZeroPushTestCase
         Assert.assertThat(response.getResponseError().getError(), nullValue());
         Assert.assertThat(response.getResponseError().getMessage(), nullValue());
         Assert.assertThat(response.getResponseError().getReferenceUrl(), nullValue());
+    }
+
+    @Test
+    public void invalidTokenExceptionTest()
+    {
+        exception.expect(InvalidDeviceTokenException.class);
+
+        new AndroidPushNotification.Builder()
+            .addDatum("a", "b")
+            .addDeviceTokens(" ")
+            .build();
     }
 
     @Test

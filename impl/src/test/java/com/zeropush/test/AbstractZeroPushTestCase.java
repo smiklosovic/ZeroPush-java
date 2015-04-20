@@ -34,6 +34,7 @@ import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
 import com.zeropush.device.DeviceResponse;
 import com.zeropush.register.RegisterResponse;
+import com.zeropush.test.util.Utils;
 
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
@@ -41,13 +42,15 @@ import com.zeropush.register.RegisterResponse;
  */
 public abstract class AbstractZeroPushTestCase extends LoadingPropertiesTestCase
 {
-    protected static final String DEVICE_TOKEN = "1234567890";
+    protected static String DEVICE_TOKEN;
 
     protected static final String DEVICE_CHANNEL = "testing_channel";
 
     @BeforeClass
     public static void setup() throws Exception
     {
+        DEVICE_TOKEN = Utils.randomAlphanumeric(100);
+
         loadProperties();
         ZeroPush.setConfiguration(new ZeroPushConfiguration()); // only for testing purposes
         ZeroPush.getConfiguration().setServerToken(System.getProperty("zeropush.token.server", getProperty("zeropush.token.server")));

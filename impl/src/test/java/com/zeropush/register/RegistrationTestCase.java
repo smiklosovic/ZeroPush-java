@@ -33,8 +33,8 @@ import org.junit.runners.JUnit4;
 
 import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
-import com.zeropush.register.RegisterResponse;
 import com.zeropush.test.LoadingPropertiesTestCase;
+import com.zeropush.test.util.Utils;
 
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
@@ -43,11 +43,13 @@ import com.zeropush.test.LoadingPropertiesTestCase;
 @RunWith(JUnit4.class)
 public class RegistrationTestCase extends LoadingPropertiesTestCase
 {
-    private static final String DEVICE_TOKEN = "1234567890";
+    private static String DEVICE_TOKEN;
 
     @BeforeClass
     public static void setup() throws Exception
     {
+        DEVICE_TOKEN = Utils.randomAlphanumeric(100);
+
         loadProperties();
         ZeroPush.setConfiguration(new ZeroPushConfiguration()); // only for testing purposes
         ZeroPush.getConfiguration().setServerToken(System.getProperty("zeropush.token.server", getProperty("zeropush.token.server")));
