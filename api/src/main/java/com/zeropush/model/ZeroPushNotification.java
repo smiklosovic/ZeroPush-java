@@ -47,7 +47,7 @@ public abstract class ZeroPushNotification
 
     /**
      *
-     * @param deviceTokens
+     * @param deviceTokens device tokens to set
      * @throws InvalidDeviceTokenException if some of tokens is not valid
      * @see TokenValidator
      */
