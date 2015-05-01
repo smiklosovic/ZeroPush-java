@@ -98,6 +98,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <version.maven.source>2.3</version.maven.source>
         <version.maven.javadoc>2.9.1</version.maven.javadoc>
         <version.maven.builder.helper>1.7</version.maven.builder.helper>
+        <version.maven.release.plugin>2.5.1</version.maven.release.plugin>
+        <version.maven.scm.plugin>1.9.2</version.maven.scm.plugin>
         <version.signature16>1.1</version.signature16>
 
         <maven.compiler.target>1.6</maven.compiler.target>
@@ -141,11 +143,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
+                <version>${version.maven.release.plugin}</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
+                    <tagNameFormat>@{version}</tagNameFormat>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>${version.maven.scm.plugin}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
