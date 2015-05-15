@@ -22,20 +22,21 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.model;
+package com.zeropush.model.token;
 
 import java.util.regex.Pattern;
 
-import com.zeropush.exception.InvalidDeviceTokenException;
+import com.zeropush.model.Platform;
+import com.zeropush.model.notification.exception.InvalidDeviceTokenException;
 
 /**
+ * Validates if a device token for some platform is valid or not.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
 public class TokenValidator
 {
-
     private static final Pattern ANDROID_DEVICE_TOKEN = Pattern.compile("(?i)[0-9a-z\\-_]{100,}");
 
     private static final Pattern IOS_DEVICE_TOKEN = Pattern.compile("(?i)[a-f0-9 -]{64,}");
@@ -61,12 +62,14 @@ public class TokenValidator
         {
             case ANDROID_GCM:
                 valid = ANDROID_DEVICE_TOKEN.matcher(token).matches();
+                break;
             case SAFARI:
             case IOS:
                 valid = IOS_DEVICE_TOKEN.matcher(token).matches();
                 break;
             default:
-                throw new IllegalStateException("");
+                throw new IllegalStateException(
+                    String.format("Unable to determine platform for validation. You entered: %" , platform.name()));
         }
 
         if (!valid)

@@ -89,7 +89,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         <version.http.client>4.3.6</version.http.client>
         <version.http.client.android>4.3.5.1</version.http.client.android>
-        <version.gson>2.3.1</version.gson>
 
         <version.maven.animal.sniffer>1.13</version.maven.animal.sniffer>
         <version.maven.compiler>2.3.2</version.maven.compiler>
@@ -110,6 +109,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     <!-- Modules -->
     <modules>
+        <module>model</module>
         <module>api</module>
         <module>impl</module>
         <module>impl-android</module>

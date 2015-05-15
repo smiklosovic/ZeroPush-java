@@ -22,15 +22,14 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.notify.notification;
+package com.zeropush.model.notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
 import com.zeropush.model.Platform;
-import com.zeropush.model.ZeroPushNotification;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
 
 /**
  * Represents iOS and MacOS push notification. You get reference to this object by {@link IOSPushNotification.Builder#build()}.
@@ -132,6 +131,8 @@ public final class IOSPushNotification extends ZeroPushNotification
      */
     public static class Builder
     {
+        private static final Gson gson = new Gson();
+
         final List<String> deviceTokens = new ArrayList<String>();
 
         private String alert;
@@ -147,6 +148,11 @@ public final class IOSPushNotification extends ZeroPushNotification
         private boolean contentAvailable;
 
         private String category;
+
+        public IOSPushNotification build(String from)
+        {
+            return gson.fromJson(from, IOSPushNotification.class);
+        }
 
         public IOSPushNotification build()
         {

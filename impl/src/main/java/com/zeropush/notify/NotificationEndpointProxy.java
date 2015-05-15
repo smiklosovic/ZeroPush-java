@@ -24,8 +24,8 @@
  */
 package com.zeropush.notify;
 
-import com.zeropush.model.ZeroPushNotification;
 import com.zeropush.model.ZeroPushNotificationResponse;
+import com.zeropush.model.notification.ZeroPushNotification;
 
 /**
  *

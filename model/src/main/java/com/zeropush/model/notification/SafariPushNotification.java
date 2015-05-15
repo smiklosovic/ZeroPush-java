@@ -22,15 +22,14 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.notify.notification;
+package com.zeropush.model.notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
 import com.zeropush.model.Platform;
-import com.zeropush.model.ZeroPushNotification;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
 
 /**
  * Represents Safari push notification. You get reference to this object by {@link SafariPushNotification.Builder#build()}.
@@ -117,6 +116,8 @@ public final class SafariPushNotification extends ZeroPushNotification
 
     public static class Builder
     {
+        private static final Gson gson = new Gson();
+
         final List<String> deviceTokens = new ArrayList<String>();
 
         String title;
@@ -128,6 +129,11 @@ public final class SafariPushNotification extends ZeroPushNotification
         String label;
 
         long expiry = 0;
+
+        public SafariPushNotification build(String from)
+        {
+            return gson.fromJson(from, SafariPushNotification.class);
+        }
 
         public SafariPushNotification build()
         {

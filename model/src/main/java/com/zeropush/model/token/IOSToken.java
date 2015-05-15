@@ -22,37 +22,30 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.exception;
+package com.zeropush.model.token;
 
-import com.zeropush.model.ZeroPushNotification;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
- * Exception thrown when {@link ZeroPushNotification#validate()} does not pass.
+ * Abstraction of iOS token.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class ZeroPushNotificationValidationException extends RuntimeException
+class IOSToken extends Token
 {
-    private static final long serialVersionUID = -8241387313817411230L;
+    private static final Pattern IOS_DEVICE_TOKEN = Pattern.compile("(?i)[a-f0-9 -]{64,}");
 
-    public ZeroPushNotificationValidationException()
+    @Override
+    public boolean isValid(String token)
     {
-        super();
+        return IOS_DEVICE_TOKEN.matcher(token).matches();
     }
 
-    public ZeroPushNotificationValidationException(String message, Throwable cause)
+    @Override
+    protected String generate()
     {
-        super(message, cause);
-    }
-
-    public ZeroPushNotificationValidationException(String message)
-    {
-        super(message);
-    }
-
-    public ZeroPushNotificationValidationException(Throwable cause)
-    {
-        super(cause);
+        return UUID.randomUUID().toString().concat(UUID.randomUUID().toString());
     }
 }

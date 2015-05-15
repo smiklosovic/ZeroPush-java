@@ -36,13 +36,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.zeropush.ZeroPush;
-import com.zeropush.exception.InvalidDeviceTokenException;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
 import com.zeropush.exception.ZeroPushRequestBuilderException;
-import com.zeropush.model.ZeroPushNotification;
 import com.zeropush.model.ZeroPushNotificationResponse;
-import com.zeropush.notify.notification.AndroidPushNotification;
-import com.zeropush.notify.notification.IOSPushNotification;
+import com.zeropush.model.notification.AndroidPushNotification;
+import com.zeropush.model.notification.IOSPushNotification;
+import com.zeropush.model.notification.ZeroPushNotification;
+import com.zeropush.model.notification.exception.InvalidDeviceTokenException;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
 import com.zeropush.test.AbstractZeroPushTestCase;
 
 /**

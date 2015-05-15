@@ -22,31 +22,31 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.exception;
+package com.zeropush.model.token;
+
+import java.util.regex.Pattern;
+
+import com.zeropush.RandomGenerationUtil;
 
 /**
+ * Abstraction of Android token.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class InvalidDeviceTokenException extends RuntimeException {
+class AndroidToken extends Token
+{
+    private static final Pattern ANDROID_DEVICE_TOKEN = Pattern.compile("(?i)[0-9a-z\\-_]{100,}");
 
-    private static final long serialVersionUID = 5446256549154176085L;
-
-    public InvalidDeviceTokenException() {
-        super();
+    @Override
+    public boolean isValid(String token)
+    {
+        return ANDROID_DEVICE_TOKEN.matcher(token).matches();
     }
 
-    public InvalidDeviceTokenException(String message, Throwable cause) {
-        super(message, cause);
+    @Override
+    public String generate()
+    {
+        return RandomGenerationUtil.randomAlphanumeric(100);
     }
-
-    public InvalidDeviceTokenException(String message) {
-        super(message);
-    }
-
-    public InvalidDeviceTokenException(Throwable cause) {
-        super(cause);
-    }
-
 }

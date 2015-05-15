@@ -35,8 +35,8 @@ import org.junit.BeforeClass;
 
 import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
+import com.zeropush.model.token.TokenGenerator;
 import com.zeropush.register.RegisterResponse;
-import com.zeropush.test.util.Utils;
 
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
@@ -55,14 +55,13 @@ public class AbstractZeroPushMultiDeviceRegistrationTestCase
     @BeforeClass
     public static void setup()
     {
-        DEVICE_TOKEN = Utils.randomAlphanumeric(100);
+        DEVICE_TOKEN = TokenGenerator.ANDROID.generate();
 
         ZeroPush.setConfiguration(new ZeroPushConfiguration()); // only for testing purposes
         ZeroPush.getConfiguration().setServerToken(System.getProperty("zeropush.token.server"));
         ZeroPush.getConfiguration().setApplicationToken(System.getProperty("zeropush.token.app"));
-        generateDeviceTokens(deviceTokens, NUMBER_OF_REGISTRATIONS);
 
-        System.out.println(deviceTokens);
+        deviceTokens.addAll(TokenGenerator.ANDROID.generate(NUMBER_OF_REGISTRATIONS));
     }
 
     @Before
@@ -88,14 +87,6 @@ public class AbstractZeroPushMultiDeviceRegistrationTestCase
             Assert.assertEquals("ok", unRegisterResponse.getMessage().getMessage());
 
             System.out.println("unregistered " + i);
-        }
-    }
-
-    private static void generateDeviceTokens(List<String> devicetokens, int numberofregistrations)
-    {
-        for (int i = 0; i < numberofregistrations; i++)
-        {
-            devicetokens.add(Utils.randomAlphanumeric(100));
         }
     }
 }

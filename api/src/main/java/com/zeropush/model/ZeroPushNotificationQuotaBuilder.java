@@ -26,6 +26,8 @@ package com.zeropush.model;
 
 import org.apache.http.Header;
 
+import com.zeropush.model.ZeroPushNotificationQuota;
+
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *

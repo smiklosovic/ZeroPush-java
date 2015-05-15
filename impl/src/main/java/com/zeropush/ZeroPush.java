@@ -24,16 +24,16 @@
  */
 package com.zeropush;
 
+import com.zeropush.model.notification.AndroidPushNotification;
+import com.zeropush.model.notification.IOSPushNotification;
+import com.zeropush.model.notification.SafariPushNotification;
+import com.zeropush.model.notification.ZeroPushNotification;
 import com.zeropush.badge.BadgeEndpointProxy;
 import com.zeropush.channel.ChannelsEndpointProxy;
 import com.zeropush.configuration.ZeroPushConfiguration;
 import com.zeropush.device.DevicesEndpointProxy;
 import com.zeropush.inactivity.InactivityEndpointProxy;
-import com.zeropush.model.ZeroPushNotification;
 import com.zeropush.notify.NotificationEndpointProxy;
-import com.zeropush.notify.notification.AndroidPushNotification;
-import com.zeropush.notify.notification.IOSPushNotification;
-import com.zeropush.notify.notification.SafariPushNotification;
 import com.zeropush.register.RegisterEndpointProxy;
 import com.zeropush.subscribe.SubscriptionEndpointProxy;
 import com.zeropush.verify.VerifyEndpointProxy;

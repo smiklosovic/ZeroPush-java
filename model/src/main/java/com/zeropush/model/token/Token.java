@@ -22,25 +22,50 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.model;
+package com.zeropush.model.token;
 
-import com.zeropush.model.ZeroPushNotificationResponse;
-import com.zeropush.model.notification.ZeroPushNotification;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Implementation of this sender effectively sends a notification to the ZeroPush sever which will
- * be in turn sent to notification providers.
+ * Base class for all types of device tokens for various platforms.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public interface NotificationSender<T extends ZeroPushNotification>
+public abstract class Token
 {
+
     /**
-     * Sends a push notification to ZeroPush server.
+     * Checks if {@code token} is valid or not.
      *
-     * @param pushNotification notification for ZeroPush server.
-     * @return response from ZeroPush server
+     * @param token token to decide the validity of
+     * @return true if {@code token} is valid for this platform, false otherwise
      */
-    ZeroPushNotificationResponse send(T pushNotification);
+    public abstract boolean isValid(String token);
+
+    /**
+     * Generates random device token.
+     *
+     * @return randomly generated token for this platform
+     */
+    protected abstract String generate();
+
+    /**
+     * Generates device tokens.
+     *
+     * @param count number of device tokens to generate
+     * @return list of randomly generated device tokens
+     */
+    public List<String> generate(int count)
+    {
+        List<String> generatedTokens = new LinkedList<String>();
+
+        for (int i = 0; i < count; i++)
+        {
+            generatedTokens.add(generate());
+        }
+
+        return generatedTokens;
+    }
 }

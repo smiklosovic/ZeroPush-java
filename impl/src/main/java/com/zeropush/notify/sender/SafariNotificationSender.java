@@ -32,7 +32,7 @@ import com.zeropush.ZeroPush;
 import com.zeropush.exception.ZeroPushRequestBuilderException;
 import com.zeropush.model.NotificationSender;
 import com.zeropush.model.ZeroPushNotificationResponse;
-import com.zeropush.notify.notification.SafariPushNotification;
+import com.zeropush.model.notification.SafariPushNotification;
 import com.zeropush.request.RequestType;
 import com.zeropush.request.ZeroPushRequestBuilder;
 

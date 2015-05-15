@@ -22,25 +22,37 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.model;
+package com.zeropush.model.notification.exception;
 
-import com.zeropush.model.ZeroPushNotificationResponse;
 import com.zeropush.model.notification.ZeroPushNotification;
 
 /**
- * Implementation of this sender effectively sends a notification to the ZeroPush sever which will
- * be in turn sent to notification providers.
+ * Exception thrown when the validation of the {@link ZeroPushNotification} does not pass.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public interface NotificationSender<T extends ZeroPushNotification>
+public class ZeroPushNotificationValidationException extends RuntimeException
 {
-    /**
-     * Sends a push notification to ZeroPush server.
-     *
-     * @param pushNotification notification for ZeroPush server.
-     * @return response from ZeroPush server
-     */
-    ZeroPushNotificationResponse send(T pushNotification);
+    private static final long serialVersionUID = -8241387313817411230L;
+
+    public ZeroPushNotificationValidationException()
+    {
+        super();
+    }
+
+    public ZeroPushNotificationValidationException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
+
+    public ZeroPushNotificationValidationException(String message)
+    {
+        super(message);
+    }
+
+    public ZeroPushNotificationValidationException(Throwable cause)
+    {
+        super(cause);
+    }
 }

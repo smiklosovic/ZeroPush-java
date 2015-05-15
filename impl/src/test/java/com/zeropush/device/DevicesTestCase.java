@@ -33,7 +33,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.zeropush.ZeroPush;
-import com.zeropush.device.DeviceResponse;
 import com.zeropush.model.Device;
 import com.zeropush.test.AbstractZeroPushTestCase;
 

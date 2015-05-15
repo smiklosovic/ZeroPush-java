@@ -22,25 +22,59 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.model;
+package com.zeropush.model.token;
 
-import com.zeropush.model.ZeroPushNotificationResponse;
-import com.zeropush.model.notification.ZeroPushNotification;
+import java.util.List;
 
 /**
- * Implementation of this sender effectively sends a notification to the ZeroPush sever which will
- * be in turn sent to notification providers.
+ * Generates device tokens.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public interface NotificationSender<T extends ZeroPushNotification>
+public enum TokenGenerator
 {
+
+    ANDROID
+    {
+        @Override
+        public List<String> generate(int count)
+        {
+            return new AndroidToken().generate(count);
+        }
+
+        @Override
+        public String generate()
+        {
+            return new AndroidToken().generate(1).get(0);
+        }
+    },
+    IOS
+    {
+
+        @Override
+        public List<String> generate(int count)
+        {
+            return new IOSToken().generate(count);
+        }
+
+        @Override
+        public String generate()
+        {
+            return new IOSToken().generate(1).get(0);
+        }
+    };
+
     /**
-     * Sends a push notification to ZeroPush server.
      *
-     * @param pushNotification notification for ZeroPush server.
-     * @return response from ZeroPush server
+     * @param count number of random tokens to generate
+     * @return list of randomly generated tokens
      */
-    ZeroPushNotificationResponse send(T pushNotification);
+    public abstract List<String> generate(int count);
+
+    /**
+     *
+     * @return random token
+     */
+    public abstract String generate();
 }

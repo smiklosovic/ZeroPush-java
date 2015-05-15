@@ -22,26 +22,34 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.test.util;
+package com.zeropush.model.notification.exception;
 
-import java.util.UUID;
+import com.zeropush.model.notification.ZeroPushNotification;
 
 /**
+ * Exception thrown when {@link ZeroPushNotification} contains invalid device tokens.
  *
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
  *
  */
-public class Utils
-{
-    public static String randomAlphanumeric(int length)
-    {
-        StringBuilder builder = new StringBuilder();
+public class InvalidDeviceTokenException extends RuntimeException {
 
-        while (builder.length() < length)
-        {
-            builder.append(UUID.randomUUID().toString());
-        }
+    private static final long serialVersionUID = 5446256549154176085L;
 
-        return builder.substring(0, length);
+    public InvalidDeviceTokenException() {
+        super();
     }
+
+    public InvalidDeviceTokenException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public InvalidDeviceTokenException(String message) {
+        super(message);
+    }
+
+    public InvalidDeviceTokenException(Throwable cause) {
+        super(cause);
+    }
+
 }

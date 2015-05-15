@@ -24,12 +24,12 @@
  */
 package com.zeropush.notify;
 
-import com.zeropush.exception.ZeroPushNotificationValidationException;
-import com.zeropush.model.ZeroPushNotification;
 import com.zeropush.model.ZeroPushNotificationResponse;
-import com.zeropush.notify.notification.AndroidPushNotification;
-import com.zeropush.notify.notification.IOSPushNotification;
-import com.zeropush.notify.notification.SafariPushNotification;
+import com.zeropush.model.notification.AndroidPushNotification;
+import com.zeropush.model.notification.IOSPushNotification;
+import com.zeropush.model.notification.SafariPushNotification;
+import com.zeropush.model.notification.ZeroPushNotification;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
 import com.zeropush.notify.sender.AndroidNotificationSender;
 import com.zeropush.notify.sender.IOSNotificationSender;
 import com.zeropush.notify.sender.SafariNotificationSender;

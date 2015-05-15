@@ -22,13 +22,15 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.model;
+package com.zeropush.model.notification;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.zeropush.exception.InvalidDeviceTokenException;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
+import com.zeropush.model.Platform;
+import com.zeropush.model.notification.exception.InvalidDeviceTokenException;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
+import com.zeropush.model.token.TokenValidator;
 
 /**
  * Represents base of all possible notification types.
@@ -66,7 +68,7 @@ public abstract class ZeroPushNotification
     /**
      * Tells which platform this notification targets.
      *
-     * @return platfrom which this notification is sent to
+     * @return platform which this notification is sent to
      */
     public abstract Platform provides();
 

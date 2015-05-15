@@ -26,6 +26,8 @@ package com.zeropush.model;
 
 import java.util.List;
 
+import com.zeropush.model.ZeroPushNotificationQuota;
+
 import com.zeropush.response.ZeroPushResponse;
 
 /**

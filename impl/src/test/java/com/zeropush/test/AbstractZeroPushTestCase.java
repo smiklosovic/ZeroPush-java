@@ -33,8 +33,8 @@ import org.junit.BeforeClass;
 import com.zeropush.ZeroPush;
 import com.zeropush.configuration.ZeroPushConfiguration;
 import com.zeropush.device.DeviceResponse;
+import com.zeropush.model.token.TokenGenerator;
 import com.zeropush.register.RegisterResponse;
-import com.zeropush.test.util.Utils;
 
 /**
  * @author <a href="mailto:miklosovic@gmail.com">Stefan Miklosovic</a>
@@ -49,7 +49,7 @@ public abstract class AbstractZeroPushTestCase extends LoadingPropertiesTestCase
     @BeforeClass
     public static void setup() throws Exception
     {
-        DEVICE_TOKEN = Utils.randomAlphanumeric(100);
+        DEVICE_TOKEN = TokenGenerator.ANDROID.generate();
 
         loadProperties();
         ZeroPush.setConfiguration(new ZeroPushConfiguration()); // only for testing purposes

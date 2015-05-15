@@ -25,6 +25,7 @@
 package com.zeropush.example.ee;
 
 import java.io.File;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -35,8 +36,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.zeropush.model.ZeroPushNotification;
-import com.zeropush.notify.notification.AndroidPushNotification;
+import com.zeropush.model.notification.ZeroPushNotification;
+import com.zeropush.model.notification.AndroidPushNotification;
+import com.zeropush.model.token.TokenGenerator;
 
 /**
  * This test case runs effectively in embedded Weld EE container.
@@ -87,7 +89,7 @@ public class ZeroPushTestCase
     public void sendNotificationTest(ZeroPushNotificationSender sender)
     {
         ZeroPushNotification notification = new AndroidPushNotification.Builder()
-            .addDeviceToken("123456789")
+            .addDeviceToken(TokenGenerator.ANDROID.generate())
             .addDatum("alert", "Now Boarding")
             .addDatum("username", "fred.droid")
             .build();

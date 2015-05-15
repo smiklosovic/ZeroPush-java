@@ -31,9 +31,9 @@ import org.apache.http.HttpStatus;
 
 import com.zeropush.ZeroPush;
 import com.zeropush.exception.ZeroPushEndpointException;
-import com.zeropush.model.ZeroPushNotification;
 import com.zeropush.model.ZeroPushNotificationQuota;
 import com.zeropush.model.ZeroPushNotificationResponse;
+import com.zeropush.model.notification.ZeroPushNotification;
 
 /**
  * Bean which sends a notification.

@@ -22,7 +22,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.notify.notification;
+package com.zeropush.model.notification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +30,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.zeropush.exception.ZeroPushNotificationValidationException;
 import com.zeropush.model.Platform;
-import com.zeropush.model.ZeroPushNotification;
+import com.zeropush.model.notification.exception.ZeroPushNotificationValidationException;
 
 /**
  * Represents Android push notification. You get reference to this object by {@link AndroidPushNotification.Builder#build()}.
@@ -106,6 +105,8 @@ public final class AndroidPushNotification extends ZeroPushNotification
 
     public static class Builder
     {
+        private static final Gson gson = new Gson();
+
         final List<String> deviceTokens = new ArrayList<String>();
 
         final Map<String, String> data = new HashMap<String, String>();
@@ -115,6 +116,11 @@ public final class AndroidPushNotification extends ZeroPushNotification
         boolean delayWhileIdle = false;
 
         int timeToLive;
+
+        public AndroidPushNotification build(String from)
+        {
+            return gson.fromJson(from, AndroidPushNotification.class);
+        }
 
         public AndroidPushNotification build()
         {

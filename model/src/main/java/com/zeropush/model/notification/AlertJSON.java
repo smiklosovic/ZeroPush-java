@@ -22,7 +22,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.zeropush.notify.notification;
+package com.zeropush.model.notification;
 
 import java.util.Arrays;
 import java.util.List;
@@ -84,8 +84,16 @@ public class AlertJSON
         return launchImage;
     }
 
+    @Override
+    public String toString()
+    {
+        return new Gson().toJson(this);
+    }
+
     public static class Builder
     {
+        private static final Gson gson = new Gson();
+
         private String body;
 
         private String actionLocKey;
@@ -95,6 +103,11 @@ public class AlertJSON
         private List<String> locArgs;
 
         private String launchImage;
+
+        public AlertJSON build(String from)
+        {
+            return gson.fromJson(from, AlertJSON.class);
+        }
 
         public String build()
         {
