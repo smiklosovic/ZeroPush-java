@@ -54,17 +54,19 @@ public class InactivityResponse extends ZeroPushResponse
 
         private String marked_inactive_at;
 
-        public String getDevice_token()
+        private long marked_inactive;
+
+        public String getDeviceToken()
         {
             return device_token;
         }
 
-        public String getMarkedInactiveAt()
+        public void setDeviceToken(String device_token)
         {
-            return marked_inactive_at;
+            this.device_token = device_token;
         }
 
-        public String getMarked_inactive_at()
+        public String getMarkedInactiveAt()
         {
             return marked_inactive_at;
         }
@@ -74,10 +76,14 @@ public class InactivityResponse extends ZeroPushResponse
             this.marked_inactive_at = marked_inactive_at;
         }
 
-        public void setDeviceToken(String device_token)
+        public long getMarkedInactive()
         {
-            this.device_token = device_token;
+            return marked_inactive;
         }
 
+        public void setMarkedInactive(long marked_inactive)
+        {
+            this.marked_inactive = marked_inactive;
+        }
     }
 }

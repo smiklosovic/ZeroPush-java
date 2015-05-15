@@ -41,4 +41,14 @@ public class InactivityEndpointProxy
     {
         return new Inactivity();
     }
+
+    /**
+     *
+     * @param since Unix time stamp.
+     * @return all devices that have been marked inactive since this time.
+     */
+    public Inactivity since(long since)
+    {
+        return new Inactivity(since);
+    }
 }

@@ -26,7 +26,9 @@ package com.zeropush.inactivity;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,6 +43,9 @@ import com.zeropush.test.AbstractZeroPushTestCase;
 @RunWith(JUnit4.class)
 public class InactivityTestCase extends AbstractZeroPushTestCase
 {
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
     @Test
     public void inactivityTest()
     {
@@ -50,4 +55,20 @@ public class InactivityTestCase extends AbstractZeroPushTestCase
         Assert.assertTrue(inactivityResponse.getInactivities().isEmpty());
     }
 
+    @Test
+    public void inactivitySinceTest()
+    {
+        InactivityResponse inactivityResponse = ZeroPush.inactivity().since(1363033513).execute();
+
+        Assert.assertEquals(HttpStatus.SC_OK, inactivityResponse.getStatusCode());
+        Assert.assertTrue(inactivityResponse.getInactivities().isEmpty());
+    }
+
+    @Test
+    public void inactivityWithNegativeSinceTest()
+    {
+        exception.expect(IllegalArgumentException.class);
+
+        ZeroPush.inactivity().since(-1).execute();
+    }
 }

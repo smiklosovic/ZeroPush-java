@@ -45,7 +45,7 @@ public class HttpResponseUtil
 
     /**
      *
-     * @param response reponse to operate upon
+     * @param response response to operate upon
      * @throws IllegalStateException if {@code response} is a null object
      */
     public HttpResponseUtil(HttpResponse response)

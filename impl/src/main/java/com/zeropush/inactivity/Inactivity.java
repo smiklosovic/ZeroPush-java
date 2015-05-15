@@ -46,13 +46,36 @@ import com.zeropush.response.ZeroPushResponseError;
  */
 public class Inactivity implements Endpoint<InactivityResponse>
 {
+    private long since = -1;
+
+    public Inactivity()
+    {
+    }
+
+    public Inactivity(long since)
+    {
+        if (since <= 0)
+        {
+            throw new IllegalArgumentException(
+                "'since' parameter for inactivity request can not be lower then 0. You have entered: " + since);
+        }
+
+        this.since = since;
+    }
+
     @Override
     public InactivityResponse execute() throws ZeroPushEndpointException
     {
-        HttpUriRequest request = new ZeroPushRequestBuilder(RequestType.GET, ZeroPush.getConfiguration())
+        ZeroPushRequestBuilder builder = new ZeroPushRequestBuilder(RequestType.GET, ZeroPush.getConfiguration())
             .withAuthToken(ZeroPush.getConfiguration().getServerToken())
-            .withPath("/inactive_tokens")
-            .build();
+            .withPath("/inactive_tokens");
+
+        if (since > 0)
+        {
+            builder.withParameter("since", since);
+        }
+
+        HttpUriRequest request = builder.build();
 
         HttpResponse response = new ZeroPushRequestExecutor().execute(request);
 
