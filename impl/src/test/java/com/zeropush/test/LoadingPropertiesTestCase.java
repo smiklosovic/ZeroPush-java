@@ -26,6 +26,7 @@ package com.zeropush.test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -62,7 +63,31 @@ public class LoadingPropertiesTestCase
             return;
         }
 
-        properties.load(new FileInputStream(propertiesFile));
+        FileInputStream fis = null;
+
+        try
+        {
+            fis = new FileInputStream(propertiesFile);
+            properties.load(fis);
+        }
+        catch (IOException ex)
+        {
+            throw new IOException("An error occurred when reading from the input stream in order to load properties.", ex);
+        }
+        finally
+        {
+            if (fis != null)
+            {
+                try
+                {
+                    fis.close();
+                }
+                catch (IOException ex)
+                {
+                    logger.fine("Unable to close file input stream for properties loading.");
+                }
+            }
+        }
     }
 
     public static final void loadProperties() throws Exception

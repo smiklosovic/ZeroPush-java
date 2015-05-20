@@ -120,7 +120,7 @@ public class VerificationTestCase extends LoadingPropertiesTestCase
     {
         exception.expect(ZeroPushEndpointException.class);
         exception.expectMessage("Authentication token to verify specified via credentials(String) was "
-                    + "null object or an empty String.");
+            + "null object or an empty String.");
 
         ZeroPush.verification().credentials(null).execute();
     }

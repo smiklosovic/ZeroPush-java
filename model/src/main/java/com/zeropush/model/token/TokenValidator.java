@@ -69,7 +69,7 @@ public class TokenValidator
                 break;
             default:
                 throw new IllegalStateException(
-                    String.format("Unable to determine platform for validation. You entered: %" , platform.name()));
+                    String.format("Unable to determine platform for validation. You entered: %s" , platform.name()));
         }
 
         if (!valid)
