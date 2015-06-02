@@ -113,7 +113,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
 
         private String info;
 
-        private int expiry;
+        private long expiry;
 
         private boolean contentAvailable;
 
@@ -145,7 +145,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
             return this;
         }
 
-        public RequestBuilderFactory expiry(int expiry)
+        public RequestBuilderFactory expiry(long expiry)
         {
             this.expiry = expiry;
             return this;

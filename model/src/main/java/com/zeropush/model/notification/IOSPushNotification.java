@@ -49,7 +49,7 @@ public final class IOSPushNotification extends ZeroPushNotification
 
     private String info;
 
-    private int expiry;
+    private long expiry;
 
     private boolean contentAvailable;
 
@@ -102,7 +102,7 @@ public final class IOSPushNotification extends ZeroPushNotification
         return info;
     }
 
-    public int getExpiry()
+    public long getExpiry()
     {
         return expiry;
     }
@@ -143,7 +143,7 @@ public final class IOSPushNotification extends ZeroPushNotification
 
         private String info;
 
-        private int expiry;
+        private long expiry;
 
         private boolean contentAvailable;
 
@@ -252,9 +252,9 @@ public final class IOSPushNotification extends ZeroPushNotification
          * @param expiry expiration date of the notification in seconds
          * @return this builder
          */
-        public Builder expiry(int expiry)
+        public Builder expiry(long expiry)
         {
-            if (expiry > 0)
+            if (System.currentTimeMillis()/1000 < expiry)
             {
                 this.expiry = expiry;
             }
