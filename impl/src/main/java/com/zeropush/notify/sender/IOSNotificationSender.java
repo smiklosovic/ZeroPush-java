@@ -107,7 +107,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
 
         private String alert;
 
-        private String badge;
+        private int badge;
 
         private String sound;
 
@@ -163,7 +163,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
             return this;
         }
 
-        public RequestBuilderFactory badge(String badge)
+        public RequestBuilderFactory badge(int badge)
         {
             this.badge = badge;
             return this;
@@ -234,7 +234,7 @@ public class IOSNotificationSender implements NotificationSender<IOSPushNotifica
                 requestBuilder.withParameter("alert", alert);
             }
 
-            if (badge != null && badge.length() != 0)
+            if (badge >= 0)
             {
                 requestBuilder.withParameter("badge", badge);
             }

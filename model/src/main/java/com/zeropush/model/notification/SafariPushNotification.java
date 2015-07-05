@@ -265,7 +265,7 @@ public final class SafariPushNotification extends ZeroPushNotification
         /**
          *
          * @param expiry A UNIX epoch date expressed in seconds (UTC) that identifies when the notification is no longer valid
-         *        and can be discarded. In case {@code expirty} is lower then 0, it is not taken into consideration
+         *        and can be discarded. In case {@code expiry} is lower then 0, it is not taken into consideration
          * @return this builder
          */
         public Builder expiry(long expiry)

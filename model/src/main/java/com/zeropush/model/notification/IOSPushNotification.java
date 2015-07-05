@@ -43,7 +43,7 @@ public final class IOSPushNotification extends ZeroPushNotification
 
     private String alert;
 
-    private String badge;
+    private int badge;
 
     private String sound;
 
@@ -87,7 +87,7 @@ public final class IOSPushNotification extends ZeroPushNotification
         return alert;
     }
 
-    public String getBadge()
+    public int getBadge()
     {
         return badge;
     }
@@ -137,7 +137,7 @@ public final class IOSPushNotification extends ZeroPushNotification
 
         private String alert;
 
-        private String badge;
+        private int badge;
 
         private String sound;
 
@@ -215,9 +215,11 @@ public final class IOSPushNotification extends ZeroPushNotification
          * @param badge badge to set as string
          * @return this builder
          */
-        public Builder badge(String badge)
+        public Builder badge(int badge)
         {
-            this.badge = badge;
+            if (badge >= 0) {
+                this.badge = badge;
+            }
             return this;
         }
 

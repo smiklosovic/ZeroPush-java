@@ -88,7 +88,7 @@ public class NotificationMarshallingTest {
         ZeroPushNotification notification = new IOSPushNotification.Builder()
             .addDeviceToken(TokenGenerator.IOS.generate())
             .alert(alertJson)
-            .badge("+1")
+            .badge(1)
             .category("")
             .contentAvailable()
             .info("this is info")

@@ -96,7 +96,7 @@ public class NotificationTestCase extends AbstractZeroPushTestCase
         ZeroPushNotification boardingNotification = new IOSPushNotification.Builder()
             .addDeviceToken(DEVICE_TOKEN)
             .alert("Now Boarding")
-            .badge("+1")
+            .badge(1)
             .category("category1")
             .contentAvailable()
             .build();
