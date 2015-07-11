@@ -53,6 +53,11 @@ public final class SafariPushNotification extends ZeroPushNotification
 
     private long expiry;
 
+    private SafariPushNotification()
+    {
+        // for serialiation purposes
+    }
+
     private SafariPushNotification(Builder builder)
     {
         setDeviceTokens(builder.deviceTokens);

@@ -53,6 +53,11 @@ public final class AndroidPushNotification extends ZeroPushNotification
 
     private int timeToLive;
 
+    private AndroidPushNotification()
+    {
+        // for serialization purposes
+    }
+
     private AndroidPushNotification(Builder builder)
     {
         setDeviceTokens(builder.deviceTokens);

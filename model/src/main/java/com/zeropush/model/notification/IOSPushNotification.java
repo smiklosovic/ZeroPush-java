@@ -55,6 +55,11 @@ public final class IOSPushNotification extends ZeroPushNotification
 
     private String category;
 
+    private IOSPushNotification()
+    {
+        // for serialization purposes
+    }
+
     private IOSPushNotification(Builder builder)
     {
         setDeviceTokens(builder.deviceTokens);
