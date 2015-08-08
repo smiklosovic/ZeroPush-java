@@ -40,7 +40,7 @@ Note that this installation procedure holds only for snapshot version of the lib
 
 == Usage
 
-The only entry point to the client is via class +com.zeropush.ZeroPush+.
+The only entry point to the client is via class `com.zeropush.ZeroPush`.
 
 ZeroPush Java client is very intuitive and easy to use. The client is able to communicate with every ZeroPush API server endpoint. You can also send push notifications from the client to registered devices hence you can use this library from your Java backends.
 
@@ -50,36 +50,36 @@ While using ZeroPush client, every endpoint call will result in a Java oneliner 
 
 === Configuration of ZeroPush client
 
-+ZeroPush+ uses default configuration when it is not set via its +setConfiguration+ method.
+The client uses default configuration when it is not set via its `setConfiguration(ZeroPushConfiguration)` method.
 
 Before any interaction with ZeroPush server, you have to specify server and application tokens like this:
 
 [source,java]
 ----
-ZeroPush.getConfiguration().setServerToken("serve token");
+ZeroPush.getConfiguration().setServerToken("server token");
 ZeroPush.getConfiguration().setApplicationToken("application token");
 ----
 
-You can set both keys at one like this:
+You can set both keys at once like this:
 
 [source,java]
 ----
-ZeroPush.getConfiguration().setTokens(serverKey, applicationKey);
+ZeroPush.getConfiguration().setTokens("server token", "application token");
 ----
 
-Some ZeroPush REST endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via +getAuthToken()+ method on +ZeroPushConfiguration+. You can decide which token will be returned by this method by calling +preferServerToken()+ or +preferAppToken()+ method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server key is returned.
+Some ZeroPush REST endpoints are able to operate with both tokens. Internally, the token which will be used is obtained via `getAuthToken()` method on `ZeroPushConfiguration`. You can decide which token will be returned by this method by calling `preferServerToken()` or `preferAppToken()` method. By doing so, such prefered key will be used every time when it is not clear which token should be used. By default, server token is returned.
 
 === Thread safety
 
-ZeroPush client is designed to be thread safe. You can use +ZeroPush+ client in two separate threads. +ZeroPushConfiguration+ is persisted in +ThreadLocal+ so invocations of +ZeroPush+ on different threads will use different configurations.
+ZeroPush client is designed to be thread safe. You can use `ZeroPush` client in two separate threads. `ZeroPushConfiguration` is persisted in `ThreadLocal` so invocations of `ZeroPush` on different threads will use different configurations.
 
 === Sending of notifications
 
-The sending of a  push notification is in general divided into two steps. Firstly, you have to build your notification to be sent. The second step is to actually send it. Additionally, you can decide whether you want to broadcast the built notification or whether you want to broadcast it only to some channel.
+The sending of a push notification is in general divided into two steps. Firstly, you have to build your notification to be sent. The second step is to actually send it. Additionally, you can decide whether you want to broadcast the built notification or whether you want to broadcast it only to some channel.
 
 There are builders for every notification type (Android, iOS/Macs, Safari). For the brevity, only Android notification will be shown here. All other notification types are used similarly.
 
-The notification builders copy all options described in the https://zeropush.com/documentation/api_reference#notify[official documentation]. Notification builders have setters for every possible option for particular notification type. There are +IOSPushNotification+ and +SafariPushNotification+ classes for notifications meant to be sent to iOS/Macs and Safari respectively.
+The notification builders copy all options described in the https://zeropush.com/documentation/api_reference#notify[official documentation]. Notification builders have setters for every possible option for particular notification type. There are `IOSPushNotification` and `SafariPushNotification` classes for notifications meant to be sent to iOS/Macs and Safari respectively.
 
 Building and sending of an Android notification:
 
@@ -119,8 +119,8 @@ ZeroPushNotification boardingNotification = new IOSPushNotification.Builder()
 ZeroPush.notification(boardingNotification).send();    
 ----
 
-For iOS/Mac notifications, you can provide +alert+ String by two means. The first one is to specify it directly as a String 
-as shown above. The second option is to use +AlertJSON.Builder+ and build it programmatically like this:
+For iOS/Mac notifications, you can provide `alert` String by two means. The first one is to specify it directly as a String 
+as shown above. The second option is to use `AlertJSON.Builder` and build it programmatically like this:
 
 [source,java]
 ----
@@ -131,11 +131,11 @@ String alertString = new AlertJSON.Builder()
     .build();
 ----
 
-Pass such constructed +alertString+ to +alert(String)+ method on +IOSPushNotification.Builder+.
+Pass such constructed `alertString` to `alert(String)` method on `IOSPushNotification.Builder`.
 
 === Quota checking
 
-You can check your quotas as well when you execute +getQuota()+ method on an object returned while executing +send()+. Quotas 
+You can check your quotas as well when you execute `getQuota()` method on an object returned while executing `send()`. Quotas 
 are read from HTTP headers which are returned to client after the notification sending. 
 
 === Communication with ZeroPush REST endpoints
@@ -238,12 +238,12 @@ ZeroPush.channels().delete("channel_name").execute();
 
 === Inspection of a response from the ZeroPush server
 
-When you call +execute()+ method on ZeroPush oneliner, you get object which represents the actual response from ZeroPush server. You can get error messages via +getResponseError()+ 
-and you can inspect returned status code of the response as well by +getStatusCode()+ on every endpoint response object.
+When you call `execute()` method on ZeroPush oneliner, you get an object which represents the actual response from ZeroPush server. You can get error messages via `getResponseError()` 
+and you can inspect returned status code of the response as well by `getStatusCode()` on every endpoint response object.
 
 === Reaching ZeroPush service behind a proxy
 
-In case you are behind a proxy server and you want to reach ZeroPush API server, you have to create +Proxy+ object and set it to +ZeroPushConfiguration+ like the following:
+In case you are behind a proxy server and you want to reach ZeroPush API server, you have to create `Proxy` object and set it to `ZeroPushConfiguration` like the following:
 
 [source,java]
 ----
@@ -253,18 +253,18 @@ Proxy proxy = new ZeroPushConfiguration.ProxyBuilder()
     .build();
 ----
 
-After building +Proxy+, pass it into the configuration:
+After building `Proxy`, pass it into the configuration:
 
 [source,java]
 ----
 ZeroPush.getConfiguration().setProxy(proxy);
 ----
 
-From now on, all communication with ZeroPush API service will be executed via proxy.
+From now on, all communication with ZeroPush API service will be executed via that proxy.
 
 === Using client in Android environment
 
-When you use client in Android, you have to provide your own asynchronicity mechanism. If you use it in UI thread, there can be +NetworkOnMainThreadException+ thrown. You can use e.g. +AsyncTask+ class to wrap ZeroPush client into it.
+When you use client in Android, you have to provide your own asynchronicity mechanism. If you use it in UI thread, there can be `NetworkOnMainThreadException` thrown. You can use e.g. `AsyncTask` class to wrap ZeroPush client into it.
 
 === How to generate JavaDoc?
 
@@ -273,7 +273,7 @@ When you use client in Android, you have to provide your own asynchronicity mech
 $ mvn javadoc:aggregate
 ----
 
-You find generated JavaDocs in root directory in +target/site/apidocs/index.html+.
+You find generated JavaDocs in root directory in `target/site/apidocs/index.html`.
 
 === How to execute internal tests?
 
@@ -288,7 +288,7 @@ $ mvn clean test
 
 Tests use server token and app token from your ZeroPush web console. You have to specify them in order to be able to execute tests. These tests will operate against the application with the specified keys.
 
-Keys are saved in property file located in +src/test/resources/zeropush.properties+. The content of the file has to be like this:
+Keys are saved in property file located in `src/test/resources/zeropush.properties`. The content of the file has to be like this:
 
 ----
 zeropush.token.server=<your server token>
@@ -302,4 +302,4 @@ The second option is to specify tokens on a command line so these credentials wi
 $ mvn clean test -Dzeropush.token.server=<token> -Dzeropush.token.app=<token>
 ----
 
-In case you execute tests by the second option and there are tokens specified in property file as well, system properties will override these in property file. 
+In case you execute tests by the second option and there are tokens specified in a property file as well, system properties will override these in a property file. 
