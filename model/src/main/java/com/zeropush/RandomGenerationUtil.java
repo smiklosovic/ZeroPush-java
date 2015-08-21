@@ -57,9 +57,9 @@ public class RandomGenerationUtil
 
         for (int i = 0; i < count; i++)
         {
-            String randomString = UUID.randomUUID().toString().substring(0, 16);
-            String randomKey = randomString.substring(0, 16);
-            randomData.put(randomKey, randomString);
+            String randomKey = randomAlphanumeric(generateRandomNumber(16, 32));
+            String randomValue = randomAlphanumeric(generateRandomNumber(16, 32));
+            randomData.put(randomKey, randomValue);
         }
 
         return randomData;
