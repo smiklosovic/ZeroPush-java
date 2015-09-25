@@ -53,7 +53,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <version.arquillian.core>1.1.9.Final</version.arquillian.core>
         <version.arquillian.weld>1.0.0.CR9</version.arquillian.weld>
         <version.weld-core>1.1.31.Final</version.weld-core>
-        <version.shrinkwrap.resolvers>2.2.0-beta-1</version.shrinkwrap.resolvers>
+        <version.shrinkwrap.resolvers>2.2.0</version.shrinkwrap.resolvers>
         <version.junit>4.12</version.junit>
         <version.slf4j>1.6.4</version.slf4j>
 
