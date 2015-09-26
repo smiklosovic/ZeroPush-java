@@ -25,6 +25,9 @@ in your Maven projects:
 </dependency>
 ----
 
+NOTE: Keep in mind that ZeroPush dependency for Android uses `org.apache.httpcomponents:httpclient-android` artifact so it is not needed nor possible to use other version of this 
+dependency on the class path. If you put another dependency of that artifact into your project, there will be clashes of the resources on the class path.
+
 == Installation
 
 This project is managed with Maven 3. In order to install artifacts without tests, you have to execute this:
